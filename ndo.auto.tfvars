@@ -41,14 +41,15 @@ segments = {
           }
         }
       }
-      cpoc-dmz = {
-        type = "aci"
-        name = "cpoc-dmz"
-        regions = []
-      }
+      # cpoc-dmz = {
+      #   type = "aci"
+      #   name = "cpoc-dmz"
+      #   regions = []
+      # }
     }
-  engineering = {
-    name = "Engineering"
-    display_name = "HR"
-    description = "Network Segment for Engineering Apps"
+  # engineering = {
+  #   name = "Engineering"
+  #   display_name = "HR"
+  #   description = "Network Segment for Engineering Apps"
+  # }
 }
