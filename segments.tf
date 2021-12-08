@@ -5,7 +5,7 @@ resource "mso_schema_template_vrf" "segments" {
 
   schema_id       = mso_schema.ndo-demo-prod.id
   template        = mso_schema_template.segments[each.key].name
-  name            = each.value.name           # Assumes new VRF name to match template name
+  name            = lower(each.value.name)           # Assumes new VRF name to match template name
   display_name    = each.value.display_name   # Assumes new VRF name to match template name
   # layer3_multicast= false
   # vzany           = false
@@ -27,7 +27,7 @@ locals {
   awsmap = {
     for val in local.awslist:
       // format("%s-%s", val["host_key"], val["network_name"]) => val
-      format("%s-%s", val["segment_name"], val["site_name"]) => val
+      lower(format("%s-%s", val["segment_name"], val["site_name"])) => val
   }
 }
 
@@ -35,14 +35,14 @@ output "test" {
   value = local.awsmap
 }
 
-// ## Bind Schema/Template to Sites ##
-// resource "mso_schema_site" "aws-syd" {
-//   for_each = local.awsmap
-//
-//   schema_id               = mso_schema.ndo-demo-prod.id
-//   template_name           = mso_schema_template.segments[each.value.segment_name].name
-//   site_id                 = data.mso_site.AWS-SYD.id
-// }
+## Bind Schema/Template to Sites ##
+resource "mso_schema_site" "aws-syd" {
+  for_each = local.awsmap
+
+  schema_id               = mso_schema.ndo-demo-prod.id
+  template_name           = mso_schema_template.segments[each.value.segment_name].name
+  site_id                 = data.mso_site.AWS-SYD.id
+}
 
 //
 //
