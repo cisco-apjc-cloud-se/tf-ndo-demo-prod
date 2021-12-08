@@ -3,7 +3,7 @@ terraform {
     hostname = "app.terraform.io"
     organization = "mel-ciscolabs-com"
     workspaces {
-      name = "ndo-demo-prod"
+      name = "tf-ndo-demo-prod"
     }
   }
   required_providers {
