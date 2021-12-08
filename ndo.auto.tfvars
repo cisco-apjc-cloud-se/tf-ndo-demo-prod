@@ -5,9 +5,9 @@
 ### Network Segments ###
 segments = {
   hr = {
-    name = "HR"
-    display_name = "HR"
-    description = "Network Segment for HR Apps"
+    name          = "HR"
+    display_name  = "HR"
+    description   = "Network Segment for HR Apps"
     sites = {
       aws-syd = {
         name = "aws-syd"
