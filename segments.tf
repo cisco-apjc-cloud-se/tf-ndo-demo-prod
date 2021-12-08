@@ -35,26 +35,30 @@ output "test" {
   value = local.awsmap
 }
 
-## Bind Schema/Template to Sites ##
-resource "mso_schema_site" "aws-syd" {
-  for_each = local.awsmap
-
-  schema_id               = mso_schema.ndo-demo-prod.id
-  template_name           = mso_schema_template.segments[each.value.segment_name].name
-  site_id                 = data.mso_site.AWS-SYD.id
-}
-
+// ## Bind Schema/Template to Sites ##
+// resource "mso_schema_site" "aws-syd" {
+//   for_each = local.awsmap
 //
+//   schema_id               = mso_schema.ndo-demo-prod.id
+//   template_name           = mso_schema_template.segments[each.value.segment_name].name
+//   site_id                 = data.mso_site.AWS-SYD.id
+// }
 //
+// ## Bind Template VRF to Sites ##
 //
 // resource "mso_schema_site_vrf" "aws-syd" {
-//   template_name           = mso_schema.tfcb-mc-demo.template_name
+//   for_each = local.awsmap
+//
+//   template_name           = mso_schema_template.segments[each.value.segment_name].name
 //   site_id                 = data.mso_site.AWS-SYD.id
-//   schema_id               = mso_schema.tfcb-mc-demo.id
-//   vrf_name                = mso_schema_template_vrf.tfcb-mc-prod.name
+//   schema_id               = mso_schema.ndo-demo-prod.id
+//   vrf_name                = mso_schema_template_vrf.segments[each.value.segment_name].name
 //
 //   depends_on = [mso_schema_site.aws-syd]
 // }
+
+## Configure AWS Regions ##
+
 //
 // resource "mso_schema_site_vrf_region" "aws-syd" {
 //   schema_id               = mso_schema.tfcb-mc-demo.id

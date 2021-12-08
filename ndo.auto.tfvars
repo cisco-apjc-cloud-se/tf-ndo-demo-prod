@@ -5,7 +5,7 @@
 ### Network Segments ###
 segments = {
   hr = {
-    name          = "HR"
+    name          = "hr"
     display_name  = "HR"
     description   = "Network Segment for HR Apps"
     sites = {
