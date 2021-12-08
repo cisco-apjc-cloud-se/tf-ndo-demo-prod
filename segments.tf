@@ -14,7 +14,7 @@ resource "mso_schema_template_vrf" "segments" {
 
 ## Local Dictionary for AWS-enabled Segments ##
 locals {
-   = flatten([
+   awslist = flatten([
     for seg_key, segment in var.segments : [
       for site_key, site in segment.sites  :
         site.type == "aws" ? {
