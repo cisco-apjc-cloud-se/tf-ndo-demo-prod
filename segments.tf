@@ -34,15 +34,15 @@ output "test" {
   value = local.awslist
 }
 
-// ## Bind Schema/Template
-//
-// resource "mso_schema_site" "aws-syd" {
-//   for_each = var.segments
-//
-//   schema_id               = mso_schema.tfcb-mc-demo.id
-//   template_name           = mso_schema_template.segments[each.key].name
-//   site_id                 = data.mso_site.AWS-SYD.id
-// }
+## Bind Schema/Template to Sites ## 
+resource "mso_schema_site" "aws-syd" {
+  for_each = toset(local.awslist)
+
+  schema_id               = mso_schema.ndo-demo-prod.id
+  template_name           = mso_schema_template.segments[each.value.segment_name].name
+  site_id                 = data.mso_site.AWS-SYD.id
+}
+
 //
 //
 //
