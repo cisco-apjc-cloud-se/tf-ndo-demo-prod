@@ -1,4 +1,4 @@
-### Production Tenant Network Segments ###
+### Create New Template Network Segments ###
 
 resource "mso_schema_template_vrf" "segments" {
   for_each = var.segments
@@ -35,15 +35,15 @@ output "test" {
   value = local.awsmap
 }
 
-// ## Bind Schema/Template to Sites ##
-// resource "mso_schema_site" "aws-syd" {
-//   for_each = local.awsmap
-//
-//   schema_id               = mso_schema.ndo-demo-prod.id
-//   template_name           = mso_schema_template.segments[each.value.segment_name].name
-//   site_id                 = data.mso_site.AWS-SYD.id
-// }
-//
+## Bind Schema/Template to Sites ##
+resource "mso_schema_site" "aws" {
+  for_each = local.awsmap
+
+  schema_id               = mso_schema.ndo-demo-prod.id
+  template_name           = mso_schema_template.segments[each.value.segment_name].name
+  site_id                 = data.mso_site.sites[each.value.site_name].id
+}
+
 // ## Bind Template VRF to Sites ##
 //
 // resource "mso_schema_site_vrf" "aws-syd" {
@@ -56,11 +56,12 @@ output "test" {
 //
 //   depends_on = [mso_schema_site.aws-syd]
 // }
-
-## Configure AWS Regions ##
-
+//
+// ## Configure AWS Regions ##
 //
 // resource "mso_schema_site_vrf_region" "aws-syd" {
+//   for_each = local.awsmap
+//
 //   schema_id               = mso_schema.tfcb-mc-demo.id
 //   template_name           = mso_schema.tfcb-mc-demo.template_name
 //   site_id                 = data.mso_site.AWS-SYD.id

@@ -1,6 +1,12 @@
-### Enabled Sites for Production  ###
-# aws-syd = true
+### Define Tenant ###
+tenant = "Production"
 
+### Enabled Sites for Templates  ###
+sites = [
+  "AWS-SYD",
+  "AZURE-MEL",
+  "CPOC-DMZ"
+]
 
 ### Network Segments ###
 segments = {
