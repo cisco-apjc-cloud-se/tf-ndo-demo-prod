@@ -33,13 +33,13 @@ provider "mso" {
 ### Shared Data Sources ###
 data "mso_tenant" "tenant" {
   name = var.tenant
-  // display_name = "Production"
+  display_name = var.tenant # required
 }
 
 data "mso_site" "sites" {
-  for_each = lower(toset(var.sites))
+  for_each = toset(var.sites)
 
-  name = each.value  # Site names in NDO happens to be uppercase
+  name = each.value  # Existing sites defined in NDO happens to be uppercase
 }
 
 // data "mso_site" "AWS-SYD" {
@@ -55,8 +55,8 @@ data "mso_site" "sites" {
 // }
 
 ### Create Demo Schema & 1st Template ###
-resource "mso_schema" "ndo-demo-prod" {
-  name          = "Prod|MultiCloudDemo"
-  template_name = "Prod|Shared"
-  tenant_id     = data.mso_tenant.Production.id
+resource "mso_schema" "schema" {
+  name          = var.schema_name
+  template_name = var.template_name
+  tenant_id     = data.mso_tenant.tenant.id
 }

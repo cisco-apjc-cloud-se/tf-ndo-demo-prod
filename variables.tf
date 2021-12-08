@@ -1,3 +1,19 @@
+variable "tenant" {
+  type = string
+}
+
+variable "schema_name" {
+  type = string
+}
+
+variable "template_name" {
+  type = string
+}
+
+variable "sites" {
+  type = list(string)
+}
+
 variable "segments" {
   type = map(object({
     name = string

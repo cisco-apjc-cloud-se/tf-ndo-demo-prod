@@ -3,7 +3,7 @@
 resource "mso_schema_template_vrf" "segments" {
   for_each = var.segments
 
-  schema_id       = mso_schema.ndo-demo-prod.id
+  schema_id       = mso_schema.schema.id
   template        = mso_schema_template.segments[each.key].name
   name            = lower(each.value.name)           # Assumes new VRF name to match template name
   display_name    = each.value.display_name   # Assumes new VRF name to match template name
@@ -39,9 +39,9 @@ output "test" {
 resource "mso_schema_site" "aws" {
   for_each = local.awsmap
 
-  schema_id               = mso_schema.ndo-demo-prod.id
+  schema_id               = mso_schema.schema.id
   template_name           = mso_schema_template.segments[each.value.segment_name].name
-  site_id                 = data.mso_site.sites[each.value.site_name].id
+  site_id                 = data.mso_site.sites[upper(each.value.site_name)].id # Site keys happen to be uppercase
 }
 
 // ## Bind Template VRF to Sites ##

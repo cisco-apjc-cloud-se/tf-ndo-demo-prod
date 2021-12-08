@@ -1,5 +1,7 @@
 ### Define Tenant ###
 tenant = "Production"
+schema_name = "Prod|MultiCloudDemo"
+template_name = "Prod|Shared"
 
 ### Enabled Sites for Templates  ###
 sites = [
