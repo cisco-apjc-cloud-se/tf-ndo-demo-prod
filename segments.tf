@@ -14,7 +14,7 @@ resource "mso_schema_template_vrf" "segments" {
 
 ## Local Dictionary for AWS-enabled Segments ##
 locals {
-  awslist = flatten([
+   = flatten([
     for seg_key, segment in var.segments : [
       for site_key, site in segment.sites  :
         site.type == "aws" ? {
@@ -24,10 +24,11 @@ locals {
         }: null
     ]
   ])
-  // merged = {
-  //   for val in local.flatlist:
-  //     format("%s-%s", val["host_key"], val["network_name"]) => val
-  // }
+  awsmap = {
+    for val in local.awslist:
+      // format("%s-%s", val["host_key"], val["network_name"]) => val
+      format("%s-%s", val["segment_name"], val["site_name"]) => val
+  }
 }
 
 output "test" {
@@ -36,7 +37,7 @@ output "test" {
 
 ## Bind Schema/Template to Sites ##
 resource "mso_schema_site" "aws-syd" {
-  for_each = toset(local.awslist)
+  for_each = local.awsmap
 
   schema_id               = mso_schema.ndo-demo-prod.id
   template_name           = mso_schema_template.segments[each.value.segment_name].name
