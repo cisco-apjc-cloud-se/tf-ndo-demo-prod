@@ -34,7 +34,7 @@ output "test" {
   value = local.awslist
 }
 
-## Bind Schema/Template to Sites ## 
+## Bind Schema/Template to Sites ##
 resource "mso_schema_site" "aws-syd" {
   for_each = toset(local.awslist)
 
