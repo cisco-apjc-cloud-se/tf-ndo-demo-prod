@@ -53,3 +53,15 @@ variable "segments" {
     }))
   }))
 }
+
+variable "applications" {
+  type = map(object({
+    name = string
+    display_name = string
+    template = string
+    epgs = map(object({
+      name = string
+      display_name = string
+    }))
+  }))
+}

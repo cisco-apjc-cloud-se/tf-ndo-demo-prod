@@ -86,10 +86,5 @@ segments = {
         }
       }
     }
-  # engineering = {
-  #   name = "Engineering"
-  #   display_name = "HR"
-  #   description = "Network Segment for Engineering Apps"
-  # }
   }
 }
