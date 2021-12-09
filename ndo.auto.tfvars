@@ -7,7 +7,7 @@ template_name = "Prod|Shared"
 sites = [
   "AWS-SYD",
   "AZURE-MEL",
-  "CPOC-DMZ"
+  "CPOC-SYD-DMZ"
 ]
 
 ### Network Segments ###

@@ -12,32 +12,47 @@ resource "mso_schema_template_vrf" "segments" {
 }
 
 
-## Local Dictionary for AWS-enabled Segments ##
+## Local Flattened Dictionary for Sites ##
 locals {
-   awslist = flatten([
+   flatlist = flatten([
     for seg_key, segment in var.segments : [
       for site_key, site in segment.sites  :
-        site.type == "aws" ? {
+        {
           segment_name  = segment.name
           site_name     = site.name
           site          = site
-        }: null
+        }
     ]
   ])
-  awsmap = {
-    for val in local.awslist:
+  sitemap = {
+    for val in local.flatlist:
       // format("%s-%s", val["host_key"], val["network_name"]) => val
       lower(format("%s-%s", val["segment_name"], val["site_name"])) => val
   }
+ //  awslist = flatten([
+ //   for seg_key, segment in var.segments : [
+ //     for site_key, site in segment.sites  :
+ //       site.type == "aws" ? {
+ //         segment_name  = segment.name
+ //         site_name     = site.name
+ //         site          = site
+ //       }: null
+ //   ]
+ // ])
+ // awsmap = {
+ //   for val in local.awslist:
+ //     // format("%s-%s", val["host_key"], val["network_name"]) => val
+ //     lower(format("%s-%s", val["segment_name"], val["site_name"])) => val
+ // }
 }
 
 output "test" {
-  value = local.awsmap
+  value = local.sitemap
 }
 
 ## Bind Schema/Template to Sites ##
-resource "mso_schema_site" "aws" {
-  for_each = local.awsmap
+resource "mso_schema_site" "sites" {
+  for_each = local.sitemap
 
   schema_id               = mso_schema.schema.id
   template_name           = mso_schema_template.segments[each.value.segment_name].name
