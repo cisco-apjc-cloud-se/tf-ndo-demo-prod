@@ -75,7 +75,7 @@ locals {
        {
          segment_name           = site.segment_name
          site_name              = site.site_name
-         site_type              = site.type
+         site_type              = site.site_type
          bd_name                = bd.name
          display_name           = bd.display_name
          layer2_stretch         = bd.layer2_stretch
