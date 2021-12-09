@@ -54,6 +54,7 @@ segments = {
             }
           }
         }
+        bds = {}
       }
       cpoc-syd-dmz = {
         type = "aci"
