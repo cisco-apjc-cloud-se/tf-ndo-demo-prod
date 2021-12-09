@@ -36,5 +36,20 @@ variable "segments" {
           }))
         }))
       }))
+      bds = map(object({
+        name = string
+        display_name = string
+        layer2_stretch = bool
+        intersite_bum_traffic = bool
+        layer2_unknown_unicast = string
+        subnets = map(object({
+          ip                  = string
+          scope               = string
+          description         = string
+          shared              = bool
+          no_default_gateway  = bool
+          querier             = bool
+        }))
+      }))
   }))
 }

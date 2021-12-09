@@ -55,11 +55,30 @@ segments = {
           }
         }
       }
-      # cpoc-dmz = {
-      #   type = "aci"
-      #   name = "cpoc-dmz"
-      #   regions = []
-      # }
+      cpoc-syd-dmz = {
+        type = "aci"
+        name = "CPOC-SYD-DMZ"
+        regions = {}
+        bds = {
+          bd1 = {
+            name                    = "tf-mcdemo-bd1"
+            display_name            = "Multi-Cloud Demo HR Segment Bridge Domain #1"
+            layer2_stretch          = true
+            intersite_bum_traffic   = true
+            layer2_unknown_unicast  = "proxy"
+            subnets = {
+              sub1 = {
+                ip                  = "10.1.0.1/24"
+                scope               = "private" # public
+                description         = "HR Apps"
+                shared              = false
+                no_default_gateway  = false
+                querier             = true
+              }
+            }
+          }
+        }
+      }
     }
   # engineering = {
   #   name = "Engineering"
