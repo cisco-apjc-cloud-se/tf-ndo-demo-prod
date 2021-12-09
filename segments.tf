@@ -130,7 +130,7 @@ resource "mso_schema_site_vrf_region" "region" {
       content {
         ip = subnet.value.ip
         zone = subnet.value.ip
-        usage = subnet.value.usage
+        usage = try(subnet.value.usage, null)
       }
     }
   }
