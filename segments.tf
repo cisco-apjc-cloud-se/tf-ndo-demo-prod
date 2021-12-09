@@ -51,7 +51,7 @@ output "test" {
 }
 
 ## Bind Schema/Template to Sites ##
-resource "mso_schema_site" "sites" {
+resource "mso_schema_site" "test" {
   // for_each = local.sitemap
 
   schema_id               = mso_schema.schema.id
