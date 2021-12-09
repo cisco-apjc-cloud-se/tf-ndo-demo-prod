@@ -94,7 +94,7 @@ resource "mso_schema_site" "sites" {
 
 ## Bind Template VRF to Sites ##
 resource "mso_schema_site_vrf" "vrf" {
-  for_each = local.awsmap
+  for_each = local.sitemap
 
   template_name           = mso_schema_template.segments[each.value.segment_name].name
   site_id                 = data.mso_site.sites[each.value.site_name].id # Site keys happen to be uppercase
