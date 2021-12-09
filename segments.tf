@@ -57,7 +57,8 @@ locals {
        {
          segment_name  = segment.name
          site_name     = site.name
-         site          = site
+         site_type     = site.type
+         bds           = site.bds
        }
        if site.type == "aci"
    ]
