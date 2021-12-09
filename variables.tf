@@ -32,7 +32,6 @@ variable "segments" {
             ip    = string
             zone  = string
             usage = string ## Required but not used except for gateway - needs to be >0 length
-            }))
           }))
         }))
       }))
@@ -51,5 +50,6 @@ variable "segments" {
           querier             = bool
         }))
       }))
+    }))
   }))
 }
