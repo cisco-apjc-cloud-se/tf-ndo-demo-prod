@@ -55,7 +55,7 @@ resource "mso_schema_site" "sites" {
   for_each = local.sitemap
 
   schema_id               = mso_schema.schema.id
-  template_name           = mso_schema_template.segments["hr"].name
+  template_name           = "HR"
   site_id                 = data.mso_site.sites[each.value.site_name].id # Site keys happen to be uppercase
 }
 
