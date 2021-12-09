@@ -80,6 +80,7 @@ locals {
          display_name           = bd.display_name
          layer2_stretch         = bd.layer2_stretch
          intersite_bum_traffic  = bd.intersite_bum_traffic
+         layer2_unknown_unicast = bd.layer2_unknown_unicast
          subnets                = bd.subnets
        }
    ]
@@ -111,7 +112,7 @@ locals {
   acibdsubmap = {
     for val in local.acibdsublist:
      // format("%s-%s", val["host_key"], val["network_name"]) => val
-      lower(format("%s-%s-%-%", val["segment_name"], val["site_name"], val["bd_name"], val["sub_key"])) => val
+      lower(format("%s-%s-%s-%s", val["segment_name"], val["site_name"], val["bd_name"], val["sub_key"])) => val
   }
 
 }
