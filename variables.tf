@@ -29,7 +29,7 @@ variable "segments" {
         subnets = map(object({
           ip = string
           zone = string
-          usage = string # optional?
+          usage = string
           }))
         }))
       }))
