@@ -38,7 +38,7 @@ locals {
       {
         segment_name      = site.segment_name
         site_name         = site.site_name
-        site_type         = site.type
+        site_type         = site.site_type
         region_name       = region.name
         region_hub        = region.hub_name
         region_cidrs      = region.cidrs
