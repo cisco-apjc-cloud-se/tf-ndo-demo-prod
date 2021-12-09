@@ -49,6 +49,11 @@ segments = {
                     zone  = "ap-southeast-2b"
                     usage = "HR Apps #2"
                   }
+                  sub5 = {
+                    ip    = "10.1.2.96/28"
+                    zone  = "ap-southeast-2a"
+                    usage = "HR Apps TEST NEW"
+                  }
                 }
               }
             }
