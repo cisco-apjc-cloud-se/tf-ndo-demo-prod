@@ -135,7 +135,8 @@ output "acibdsubmap" {
 
 ## Bind Schema/Template to Sites ##
 resource "mso_schema_site" "sites" {
-  for_each = local.cloudsitemap
+  ## Merged Cloud & ACI Sites
+  for_each = merge(local.cloudsitemap, local.acisitemap)
 
   schema_id               = mso_schema.schema.id
   template_name           = mso_schema_template.segments[each.value.segment_name].name
