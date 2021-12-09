@@ -55,7 +55,7 @@ resource "mso_schema_site" "sites" {
   // for_each = local.sitemap
 
   schema_id               = mso_schema.schema.id
-  template_name           = "HR"
+  template_name           = "hr"
   site_id                 = data.mso_site.sites["AWS-SYD"].id
   // site_id                 = data.mso_site.sites[each.value.site_name].id # Site keys happen to be uppercase
 }
