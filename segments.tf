@@ -112,7 +112,7 @@ locals {
   acibdsubmap = {
     for val in local.acibdsublist:
      // format("%s-%s", val["host_key"], val["network_name"]) => val
-      lower(format("%s-%s-%s-%s", val["segment_name"], val["site_name"], val["bd_name"], val["sub_key"])) => val
+      lower(format("%s-%s-%s-%s", val["segment_name"], val["site_name"], val["bd_name"], val["sub_id"])) => val
   }
 
 }
