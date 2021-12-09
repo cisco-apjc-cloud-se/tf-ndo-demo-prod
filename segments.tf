@@ -221,4 +221,6 @@ resource "mso_schema_template_bd_subnet" "subnet" {
   shared                  = each.value.shared
   no_default_gateway      = each.value.no_default_gateway
   querier                 = each.value.querier
+
+  depends_on = [mso_schema_template_bd.bd]
 }
