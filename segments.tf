@@ -128,9 +128,9 @@ resource "mso_schema_site_vrf_region" "region" {
     dynamic "subnet" {
       for_each = each.value.region_subnets
       content {
-        ip = subnet.ip
-        zone = subnet.zone
-        usage = subnet.usage
+        ip = subnet.value.ip
+        zone = subnet.value.ip
+        usage = subnet.value.usage
       }
     }
   }
