@@ -56,7 +56,8 @@ resource "mso_schema_site" "sites" {
 
   schema_id               = mso_schema.schema.id
   template_name           = mso_schema_template.segments[each.value.segment_name].name
-  site_id                 = data.mso_site.sites[each.value.site_name].id # Site keys happen to be uppercase
+  // site_id                 = data.mso_site.sites[each.value.site_name].id # Site keys happen to be uppercase
+  site_id                 = data.mso_site.sites["AWS-SYD"].id # Site keys happen to be uppercase
 }
 
 // ## Bind Template VRF to Sites ##
