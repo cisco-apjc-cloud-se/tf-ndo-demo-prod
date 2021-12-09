@@ -16,14 +16,14 @@ resource "mso_schema_template_vrf" "segments" {
 locals {
    cloudsitelist = flatten([
     for seg_key, segment in var.segments : [
-      for site_key, site in segment.sites  :
-        site.type != "aci" ?
+      for site_key, site in segment.sites :
         {
           segment_name  = segment.name
           site_name     = site.name
           site_type     = site.type
           regions       = site.regions
-        } : {}
+        }
+        if site.type != "aci"
     ]
   ])
   cloudsitemap = {
@@ -54,11 +54,12 @@ locals {
   acisitelist = flatten([
    for seg_key, segment in var.segments : [
      for site_key, site in segment.sites :
-       site.type == "aci" ? {
+       {
          segment_name  = segment.name
          site_name     = site.name
          site          = site
-       } : {}
+       }
+       if site.type == "aci"
    ]
   ])
   acisitemap = {
