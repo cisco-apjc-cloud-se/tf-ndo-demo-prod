@@ -9,6 +9,12 @@ resource "mso_schema_template_anp" "anp" {
   display_name    = each.value.display_name
 }
 
+## Need parallelism?? for multiple ANPs
+
+
+
+
+
 ### Application EPGs ###
 // resource "mso_schema_template_anp_epg" "anp_epg" {
 //   schema_id = "5c4d5bb72700000401f80948"
