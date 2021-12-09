@@ -23,7 +23,7 @@ locals {
           site_name     = site.name
           site_type     = site.type
           regions       = site.regions
-        } : null
+        } : {}
     ]
   ])
   cloudsitemap = {
@@ -58,7 +58,7 @@ locals {
          segment_name  = segment.name
          site_name     = site.name
          site          = site
-       }: null
+       } : {}
    ]
   ])
   acisitemap = {
