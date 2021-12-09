@@ -20,7 +20,7 @@ locals {
         {
           segment_name  = segment.name
           site_name     = site.name
-          site          = site
+          regions       = site.regions
         }
     ]
   ])
@@ -231,143 +231,7 @@ resource "mso_schema_site_vrf_region" "region" {
 //   }
 //   depends_on = [mso_schema_site_vrf.azure-mel]
 // }
-//
-//
-// # ### Associate Template to Sites ###
-// # v0.1.5 still broken
-// # Error: "Bad Request: Patch Failed, Received: VRF 'tfcb-mc-prod' associated to site 'AZURE-MEL' should either have a Region associated to it or should be a Hosted VRF(Associated to Subnet/CIDR of a VRF configured in the Region). exception while trying to update schema"{}
-//
-//
-// # ## AWS VRF WORKAROUND
-// # resource "mso_rest" "vrf-workaround-aws" {
-// #     path = "api/v1/schemas/${mso_schema.tfcb-mc-demo.id}"
-// #     method = "PATCH"
-// #     payload = <<EOF
-// # [
-// #   {
-// #     "op": "add",
-// #     "path": "/sites/-",
-// #     "value": {
-// #       "siteId": "${data.mso_site.AWS-SYD.id}",
-// #       "templateName": "${mso_schema.tfcb-mc-demo.template_name}",
-// #       "vrfs": [{
-// #         "vrfRef": {
-// #           "schemaId": "${mso_schema.tfcb-mc-demo.id}",
-// #           "templateName": "${mso_schema.tfcb-mc-demo.template_name}",
-// #           "vrfName": "${mso_schema_template_vrf.tfcb-mc-prod.name}"
-// #         },
-// #         "regions": [{
-// #           "name": "ap-southeast-2",
-// #           "cidrs": [{
-// #             "ip": "10.111.0.0/16",
-// #             "primary": true,
-// #             "subnets": [
-// #               {
-// #               "ip": "10.111.1.0/24",
-// #               "zone": "ap-southeast-2a",
-// #               "name": "",
-// #               "usage": "gateway"
-// #               },
-// #               {
-// #               "ip": "10.111.2.0/24",
-// #               "zone": "ap-southeast-2b",
-// #               "name": "",
-// #               "usage": "gateway"
-// #               },
-// #               {
-// #               "ip": "10.111.3.0/24",
-// #               "zone": "ap-southeast-2a",
-// #               "name": ""
-// #               },
-// #               {
-// #               "ip": "10.111.4.0/24",
-// #               "zone": "ap-southeast-2b",
-// #               "name": ""
-// #               }
-// #             ],
-// #             "associatedRegion": "ap-southeast-2"
-// #           }],
-// #           "isVpnGatewayRouter": false,
-// #           "isTGWAttachment": true,
-// #           "cloudRsCtxProfileToGatewayRouterP": {
-// #             "name": "HUB1",
-// #             "tenantName": "infra"
-// #           },
-// #           "hubnetworkPeering": false
-// #         }]
-// #       }],
-// #       "intersiteL3outs": null
-// #     }
-// #   }
-// # ]
-// # EOF
-// #
-// # }
-//
-// # ## AZURE VRF WORKAROUND
-// # resource "mso_rest" "vrf-workaround-azure" {
-// #     path = "api/v1/schemas/${mso_schema.tfcb-mc-demo.id}"
-// #     method = "PATCH"
-// #     payload = <<EOF
-// # [
-// #   {
-// #     "op": "add",
-// #     "path": "/sites/-",
-// #     "value": {
-// #       "siteId": "${data.mso_site.AZURE-MEL.id}",
-// #       "templateName": "${mso_schema.tfcb-mc-demo.template_name}",
-// #       "vrfs": [{
-// #         "vrfRef": {
-// #           "schemaId": "${mso_schema.tfcb-mc-demo.id}",
-// #           "templateName": "${mso_schema.tfcb-mc-demo.template_name}",
-// #           "vrfName": "${mso_schema_template_vrf.tfcb-mc-prod.name}"
-// #         },
-// #         "regions": [{
-// #           "name": "australiasoutheast",
-// #           "cidrs": [{
-// #             "ip": "10.112.0.0/16",
-// #             "primary": true,
-// #             "subnets": [
-// #               {
-// #               "ip": "10.112.1.0/24",
-// #               "zone": "",
-// #               "name": ""
-// #               },
-// #               {
-// #               "ip": "10.112.2.0/24",
-// #               "zone": "",
-// #               "name": ""
-// #               },
-// #               {
-// #               "ip": "10.112.3.0/24",
-// #               "zone": "",
-// #               "name": ""
-// #               },
-// #               {
-// #               "ip": "10.112.4.0/24",
-// #               "zone": "",
-// #               "name": ""
-// #               }
-// #             ],
-// #             "associatedRegion": "australiasoutheast"
-// #           }],
-// #           "cloudRsCtxProfileToGatewayRouterP": {
-// #                 "name": "default",
-// #                 "tenantName": "infra"
-// #               },
-// #           "isVpnGatewayRouter": false,
-// #           "isTGWAttachment": true,
-// #           "hubnetworkPeering": false
-// #         }]
-// #       }],
-// #       "intersiteL3outs": null
-// #     }
-// #   }
-// # ]
-// # EOF
-// #
-// # }
-//
+
 // ### CPOC DMZ ACI Fabric ###
 // resource "mso_schema_site" "cpoc-syd" {
 //   schema_id               = mso_schema.tfcb-mc-demo.id
