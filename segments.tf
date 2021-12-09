@@ -14,7 +14,7 @@ resource "mso_schema_template_vrf" "segments" {
 
 ## Local Flattened Dictionary for Sites ##
 locals {
-   flatlist = flatten([
+   sitelist = flatten([
     for seg_key, segment in var.segments : [
       for site_key, site in segment.sites  :
         {
@@ -25,9 +25,27 @@ locals {
     ]
   ])
   sitemap = {
-    for val in local.flatlist:
+    for val in local.sitelist:
       // format("%s-%s", val["host_key"], val["network_name"]) => val
       lower(format("%s-%s", val["segment_name"], val["site_name"])) => val
+  }
+
+  regionlist = flatten([
+    for site_key, site in local.sitemap : [
+      for region_key, region in site.regions :
+      {
+        segment_name    = site.segment_name
+        site_name       = site.site_name
+        region_name     = region.name
+        region_hub      = region.hub_name
+        region_cidr     = region.cidr
+        region_subnets  = region.subnets
+      }
+    ]
+  ])
+  regionmap = {
+    for val in local.regionlist:
+      lower(format("%s-%s-%s", val["segment_name"], val["site_name"], val["region_name"])) => val
   }
  //  awslist = flatten([
  //   for seg_key, segment in var.segments : [
@@ -46,8 +64,12 @@ locals {
  // }
 }
 
-output "test" {
+output "sitemap" {
   value = local.sitemap
+}
+
+output "regionmap" {
+  value = local.regionmap
 }
 
 ## Bind Schema/Template to Sites ##
@@ -70,19 +92,51 @@ resource "mso_schema_site" "sites" {
   site_id                 = data.mso_site.sites[each.value.site_name].id # Site keys happen to be uppercase
 }
 
+// NOT NEEDED??
 // ## Bind Template VRF to Sites ##
-//
-// resource "mso_schema_site_vrf" "aws-syd" {
+// resource "mso_schema_site_vrf" "vrf" {
 //   for_each = local.awsmap
 //
 //   template_name           = mso_schema_template.segments[each.value.segment_name].name
-//   site_id                 = data.mso_site.AWS-SYD.id
-//   schema_id               = mso_schema.ndo-demo-prod.id
+//   site_id                 = data.mso_site.sites[each.value.site_name].id # Site keys happen to be uppercase
+//   schema_id               = mso_schema.schema.id
 //   vrf_name                = mso_schema_template_vrf.segments[each.value.segment_name].name
 //
 //   depends_on = [mso_schema_site.aws-syd]
 // }
-//
+
+## Configure Site Regions ##
+
+resource "mso_schema_site_vrf_region" "region" {
+  for_each = local.regionmap
+
+  schema_id               = mso_schema.schema.id
+  template_name           = mso_schema_template.segments[each.value.segment_name].name
+  site_id                 = data.mso_site.sites[each.value.site_name].id # Site keys happen to be uppercase
+  vrf_name                = mso_schema_template_vrf.segments[each.value.segment_name].name
+  region_name             = each.value.region_name
+  vpn_gateway             = false
+  hub_network_enable      = true
+  hub_network = {
+    name        = each.value.region_hub
+    tenant_name = "infra"
+  }
+  cidr {
+    cidr_ip = each.value.region_cidr
+    primary = true
+
+    dynamic "subnet" {
+      for_each = each.value.region_subnets
+      content {
+        ip = subnet.value["ip"]
+        zone = subnet.value["zone"]
+        usage = subnet.value["usage"]
+      }
+    }
+  }
+  // depends_on = [mso_schema_site_vrf.aws-syd]
+}
+
 // ## Configure AWS Regions ##
 //
 // resource "mso_schema_site_vrf_region" "aws-syd" {

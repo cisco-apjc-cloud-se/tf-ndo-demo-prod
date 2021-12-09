@@ -23,6 +23,7 @@ segments = {
         regions = {
           ap-southeast-2 = {
             name = "ap-southeast-2"
+            hub_name = "HUB1"
             cidr = "10.1.2.0/24"
             subnets = {
               sub1 = {

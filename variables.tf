@@ -24,6 +24,7 @@ variable "segments" {
       type = string
       regions = map(object({
         name = string
+        hub_name = string
         cidr = string
         subnets = map(object({
           ip = string
