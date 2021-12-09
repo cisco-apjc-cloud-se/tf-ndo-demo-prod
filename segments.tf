@@ -87,7 +87,7 @@ locals {
   acibdmap = {
     for val in local.acibdlist:
      // format("%s-%s", val["host_key"], val["network_name"]) => val
-      lower(format("%s-%s-s%", val["segment_name"], val["site_name"], val["bd_name"])) => val
+      lower(format("%s-%s-%s", val["segment_name"], val["site_name"], val["bd_name"])) => val
   }
 
   acibdsublist = flatten([
