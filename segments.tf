@@ -53,7 +53,7 @@ locals {
 
   acisitelist = flatten([
    for seg_key, segment in var.segments : [
-     for site_key, site in segment.sites  :
+     for site_key, site in segment.sites :
        site.type == "aci" ? {
          segment_name  = segment.name
          site_name     = site.name
@@ -68,7 +68,7 @@ locals {
   }
 
   acibdlist = flatten([
-   for site_key, site in local.acisitelist : [
+   for site_key, site in local.acisitemap : [
      for bd_key, bd in site.bds :
        {
          segment_name           = site.segment_name
