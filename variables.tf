@@ -25,11 +25,14 @@ variable "segments" {
       regions = map(object({
         name = string
         hub_name = string
-        cidr = string
-        subnets = map(object({
-          ip = string
-          zone = string
-          usage = string
+        cidrs = map(object({
+          ip      = string
+          primary = bool
+          subnets = map(object({
+            ip    = string
+            zone  = string
+            usage = string ## Required but not used except for gateway - needs to be >0 length
+            }))
           }))
         }))
       }))

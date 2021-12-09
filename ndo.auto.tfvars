@@ -24,27 +24,32 @@ segments = {
           ap-southeast-2 = {
             name = "ap-southeast-2"
             hub_name = "HUB1"
-            cidr = "10.1.2.0/24"
-            subnets = {
-              sub1 = {
-                ip    = "10.1.2.0/28"
-                zone  = "ap-southeast-2a"
-                usage = "gateway" # TGW Subnet #1
-              }
-              sub2 = {
-                ip    = "10.1.2.16/28"
-                zone  = "ap-southeast-2b"
-                usage = "gateway" # TGW Subnet #2
-              }
-              sub3 = {
-                ip    = "10.1.2.32/28"
-                zone  = "ap-southeast-2a"
-                usage = "HR Apps #1"
-              }
-              sub4 = {
-                ip    = "10.1.2.64/28"
-                zone  = "ap-southeast-2b"
-                usage = "HR Apps #2"
+            cidrs = {
+              cidr1 = {
+                ip = "10.1.2.0/24"
+                primary = true
+                subnets = {
+                  sub1 = {
+                    ip    = "10.1.2.0/28"
+                    zone  = "ap-southeast-2a"
+                    usage = "gateway" # TGW Subnet #1
+                  }
+                  sub2 = {
+                    ip    = "10.1.2.16/28"
+                    zone  = "ap-southeast-2b"
+                    usage = "gateway" # TGW Subnet #2
+                  }
+                  sub3 = {
+                    ip    = "10.1.2.32/28"
+                    zone  = "ap-southeast-2a"
+                    usage = "HR Apps #1"
+                  }
+                  sub4 = {
+                    ip    = "10.1.2.64/28"
+                    zone  = "ap-southeast-2b"
+                    usage = "HR Apps #2"
+                  }
+                }
               }
             }
           }

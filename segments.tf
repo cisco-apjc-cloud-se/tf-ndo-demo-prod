@@ -34,12 +34,12 @@ locals {
     for site_key, site in local.sitemap : [
       for region_key, region in site.regions :
       {
-        segment_name    = site.segment_name
-        site_name       = site.site_name
-        region_name     = region.name
-        region_hub      = region.hub_name
-        region_cidr     = region.cidr
-        region_subnets  = region.subnets
+        segment_name      = site.segment_name
+        site_name         = site.site_name
+        region_name       = region.name
+        region_hub        = region.hub_name
+        region_cidrs      = region.cidrs
+        // region_subnets  = region.subnets
       }
     ]
   ])
@@ -120,19 +120,24 @@ resource "mso_schema_site_vrf_region" "region" {
     name        = each.value.region_hub
     tenant_name = "infra"
   }
-  cidr {
-    cidr_ip = each.value.region_cidr
-    primary = true
 
-    dynamic "subnet" {
-      for_each = each.value.region_subnets
-      content {
-        ip = subnet.value.ip
-        zone = subnet.value.zone
-        usage = subnet.value.usage
+  dynamic "cidr" {
+    for_each = each.value.region_cidrs
+    content {
+      cidr_ip = cidr.value.ip
+      primary = cidr.value.primary
+
+      dynamic "subnet" {
+        for_each = cidr.value.subnets
+        content {
+          ip = subnet.value.ip
+          zone = subnet.value.zone
+          usage = subnet.value.usage
+        }
       }
     }
   }
+
   depends_on = [mso_schema_site_vrf.vrf]
 }
 
