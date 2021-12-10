@@ -146,8 +146,8 @@ resource "mso_schema_site_anp_epg_domain" "vmm" {
 resource "mso_schema_template_external_epg" "users" {
   for_each = var.users
 
-  schema_id           = mso_schema.tf-hybrid-cloud.id
-  template_name       = mso_schema.tf-hybrid-cloud.template_name
+  schema_id           = mso_schema.schema.id
+  template_name       = mso_schema_template.segments[each.value.segment].name
   external_epg_name   = each.value.epg_name
   external_epg_type   = each.value.epg_type # "cloud"
   display_name        = each.value.display_name
