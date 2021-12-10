@@ -55,7 +55,7 @@ variable "segments" {
 }
 
 variable "applications" {
-  type = map(object({t
+  type = map(object({
     name = string
     display_name = string
     template = string

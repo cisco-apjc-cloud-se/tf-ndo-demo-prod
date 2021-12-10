@@ -44,7 +44,7 @@ resource "mso_schema_template_anp_epg" "epg" {
   template_name               = mso_schema_template.segments[each.value.template].name
   anp_name                    = each.value.app_name
   name                        = each.value.epg_name
-  // bd_name                     = each.value.bd_name
+  // bd_name                     = each.value.bd_name  # "unspecified"
   vrf_name                    = mso_schema_template_vrf.segments[each.value.template].name # VRF name sames as Template
   display_name                = each.value.epg_display_name
   // useg_epg                    = each.value.useg_enabled
@@ -53,7 +53,7 @@ resource "mso_schema_template_anp_epg" "epg" {
   // preferred_group             = each.value.preferred_group
 }
 
-resource "mso_schema_template_anp_epg" "epg" {
+resource "mso_schema_template_anp_epg" "test" {
   schema_id                   = mso_schema.schema.id
   template_name               = mso_schema_template.segments["hr"].name
   anp_name                    = mso_schema_template_anp.anp["hrapp1"].name
