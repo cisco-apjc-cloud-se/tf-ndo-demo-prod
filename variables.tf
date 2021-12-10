@@ -54,11 +54,15 @@ variable "segments" {
   }))
 }
 
+variable "aci_vmm_domain" {
+  type = string
+}
+
 variable "applications" {
   type = map(object({
     name = string
     display_name = string
-    template = string
+    segment = string
     epgs = map(object({
       name = string
       display_name = string

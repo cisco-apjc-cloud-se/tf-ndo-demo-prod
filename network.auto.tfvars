@@ -3,6 +3,9 @@ tenant = "Production"
 schema_name = "Prod|MultiCloudDemo"
 template_name = "Prod|Shared"
 
+### On-Premise Details ###
+aci_vmm_domain = "CPOC-SE-VC-HX"
+
 ### Enabled Sites for Templates  ###
 sites = [
   "AWS-SYD",

@@ -4,7 +4,7 @@ resource "mso_schema_template_anp" "anp" {
   for_each = var.applications
 
   schema_id       = mso_schema.schema.id
-  template        = mso_schema_template.segments[each.value.template].name
+  template        = mso_schema_template.segments[each.value.segment].name
   name            = each.value.name
   display_name    = each.value.display_name
 }
@@ -17,7 +17,7 @@ locals {
       for epg_key, epg in app.epgs :
         {
           app_name                    = app.name
-          template                    = app.template
+          segment                     = app.segment
           epg_name                    = epg.name
           epg_display_name            = epg.display_name
           bd_name                     = epg.bd_name
@@ -26,6 +26,7 @@ locals {
           // intersite_multicast_source  = epg.intersite_multicast_source
           // preferred_group             = epg.preferred_group
           selectors                   = epg.selectors
+          sites                       = lookup(var.segments, app.segment, {}).sites
         }
         // if site.type != "aci"
     ]
@@ -40,7 +41,7 @@ locals {
      for sel_key, selector in epg.selectors :
        {
          app_name       = epg.app_name
-         template       = epg.template
+         segment        = epg.segment
          epg_name       = epg.epg_name
          selector_name  = selector.name
          key            = selector.key
@@ -62,11 +63,11 @@ resource "mso_schema_template_anp_epg" "epg" {
   for_each = local.appepgmap
 
   schema_id                   = mso_schema.schema.id
-  template_name               = mso_schema_template.segments[each.value.template].name
+  template_name               = mso_schema_template.segments[each.value.segment].name
   anp_name                    = each.value.app_name
   name                        = each.value.epg_name
   bd_name                     = each.value.bd_name  # "unspecified"
-  vrf_name                    = mso_schema_template_vrf.segments[each.value.template].name # VRF name sames as Template
+  vrf_name                    = mso_schema_template_vrf.segments[each.value.segment].name # VRF name sames as Template
   display_name                = each.value.epg_display_name
   // useg_epg                    = each.value.useg_enabled
   // intra_epg                   = each.value.intra_epg #"unenforced"
@@ -79,7 +80,7 @@ resource "mso_schema_template_anp_epg_selector" "selector" {
   for_each = local.appepgselectormap
 
   schema_id                   = mso_schema.schema.id
-  template_name               = mso_schema_template.segments[each.value.template].name
+  template_name               = mso_schema_template.segments[each.value.segment].name # VRF name sames as Template
   anp_name                    = each.value.app_name
   epg_name                    = each.value.epg_name
   name                        = each.value.selector_name
@@ -92,15 +93,16 @@ resource "mso_schema_template_anp_epg_selector" "selector" {
 
 ### Application EPG Selectors - On-Premise Domain ###
 resource "mso_schema_site_anp_epg_domain" "vmm" {
+  # Flatten with on-prem type sites?
   for_each = local.appepgmap
 
   schema_id                   = mso_schema.schema.id
-  template_name               = mso_schema_template.segments[each.value.template].name
-  site_id                     = data.mso_site.sites["CPOC-SYD-DMZ"].id
+  template_name               = mso_schema_template.segments[each.value.segment].name
+  site_id                     = data.mso_site.sites["CPOC-SYD-DMZ"].id # Initally Hard Coded
   anp_name                    = each.value.app_name
   epg_name                    = each.value.epg_name
   domain_type                 = "vmmDomain"
-  dn                          = "CPOC-SE-VC-HX"
+  dn                          = var.aci_vmm_domain
   deploy_immediacy            = "lazy" # mandatory?
   resolution_immediacy        = "lazy" # mandatory
   // vlan_encap_mode = "static"
