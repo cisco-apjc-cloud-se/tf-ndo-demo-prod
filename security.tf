@@ -44,7 +44,7 @@ resource "mso_schema_template_anp_epg" "epg" {
   template_name               = mso_schema_template.segments[each.value.template].name
   anp_name                    = each.value.app_name
   name                        = each.value.epg_name
-  bd_name                     = each.value.bd_name
+  // bd_name                     = each.value.bd_name
   vrf_name                    = mso_schema_template_vrf.segments[each.value.template].name # VRF name sames as Template
   display_name                = each.value.epg_display_name
   // useg_epg                    = each.value.useg_enabled
