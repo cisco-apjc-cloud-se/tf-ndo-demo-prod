@@ -58,6 +58,6 @@ data "mso_site" "sites" {
 ### Create Demo Schema & 1st Template ###
 resource "mso_schema" "schema" {
   name          = var.schema_name
-  template_name = var.template_name
+  template_name = var.shared_template_name
   tenant_id     = data.mso_tenant.tenant.id
 }

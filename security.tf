@@ -142,6 +142,28 @@ resource "mso_schema_site_anp_epg_domain" "vmm" {
 }
 
 ### External EPGs ###
+# NOTE: Doesn't work until VRF configured per Site
+resource "mso_schema_template_external_epg" "users" {
+  for_each = var.users
+
+  schema_id           = mso_schema.tf-hybrid-cloud.id
+  template_name       = mso_schema.tf-hybrid-cloud.template_name
+  external_epg_name   = each.value.epg_name
+  external_epg_type   = each.value.epg_type # "cloud"
+  display_name        = each.value.display_name
+  vrf_name            = mso_schema_template_vrf.segments[each.value.segment].name # VRF name sames as Template
+  anp_name            = each.value.anp
+  # l3out_name          = "temp"
+  site_id             = [ for site_name in each.value.sites :  data.mso_site.sites[each.value.site_name].id ]  ## List?
+  selector_name       = each.value.epg_name # use epg_name
+  selector_ip         = each.value.ip
+
+  depends_on = [
+    mso_schema_site_vrf.vrf
+    // mso_schema_site_vrf_region.region
+  ]
+}
+
 
 ### Filters ###
 

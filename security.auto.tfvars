@@ -1,6 +1,27 @@
 
+users = {
+  cloud-public = {
+    name = "cloud-public"
+    display_name = "Cloud Public Internet"
+    type = "cloud"
+    sites = [
+      "AWS-SYD",
+      "AZURE-MEL"
+      # "CPOC-SYD-DMZ"
+    ]
+    anp = "shared"
+    segment = "hr"
+    ip = "0.0.0.0/0"
+  }
+}
 
 applications = {
+  shared = {
+    name = "shared"
+    display_name = "Shared Applications & User Groups"
+    segment = "hr"  ## shared template
+    epgs = {}
+  }
   hrapp1 = {
     name = "hrapp1"
     display_name = "HR App Profile #1"
