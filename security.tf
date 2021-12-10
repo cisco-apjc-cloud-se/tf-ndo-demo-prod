@@ -26,7 +26,7 @@ locals {
           // intersite_multicast_source  = epg.intersite_multicast_source
           // preferred_group             = epg.preferred_group
           selectors                   = epg.selectors
-          sites                       = lookup(var.segments, app.segment, {}).sites
+          test                        = lookup(var.segments, app.segment)
         }
         // if site.type != "aci"
     ]
