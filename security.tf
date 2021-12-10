@@ -46,7 +46,7 @@ resource "mso_schema_template_anp_epg" "epg" {
   name                        = each.value.epg_name
   bd_name                     = each.value.bd_name
   vrf_name                    = mso_schema_template_vrf.segments[each.value.template].name # VRF name sames as Template
-  display_name                = each.value.display_name
+  display_name                = each.value.epg_display_name
   useg_epg                    = each.value.useg_enabled
   intra_epg                   = each.value.intra_epg #"unenforced"
   intersite_multicast_source  = each.value.intersite_multicast_source
