@@ -10,19 +10,15 @@ applications = {
         name = "web"
         display_name = "Web Tier"
         bd_name = "unspecified"
-        useg_enabled = false
-        intra_epg = "unenforced"
-        intersite_multicast_source = false
-        preferred_group = false
+        # useg_enabled = false
+        # intra_epg = "unenforced"
+        # intersite_multicast_source = false
+        # preferred_group = false
       }
       db = {
         name = "db"
         display_name = "Database Tier"
         bd_name = "unspecified"
-        useg_enabled = false
-        intra_epg = "unenforced"
-        intersite_multicast_source = false
-        preferred_group = false
       }
     }
   }
@@ -35,19 +31,11 @@ applications = {
         name = "web"
         display_name = "Web Tier"
         bd_name = "unspecified"
-        useg_enabled = false
-        intra_epg = "unenforced"
-        intersite_multicast_source = false
-        preferred_group = false
       }
       db = {
         name = "db"
         display_name = "Database Tier"
         bd_name = "unspecified"
-        useg_enabled = false
-        intra_epg = "unenforced"
-        intersite_multicast_source = false
-        preferred_group = false
       }
     }
   }

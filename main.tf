@@ -1,4 +1,5 @@
 terraform {
+  // experiments = [module_variable_optional_attrs]
   backend "remote" {
     hostname = "app.terraform.io"
     organization = "mel-ciscolabs-com"
