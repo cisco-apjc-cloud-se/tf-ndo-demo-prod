@@ -20,7 +20,7 @@ locals {
           template                    = app.template
           epg_name                    = epg.name
           epg_display_name            = epg.display_name
-          bd_name                     = epg.bd_name
+          // bd_name                     = epg.bd_name
           useg_enabled                = epg.useg_enabled
           intra_epg                   = epg.intra_epg
           intersite_multicast_source  = epg.intersite_multicast_source
@@ -47,6 +47,20 @@ resource "mso_schema_template_anp_epg" "epg" {
   // bd_name                     = each.value.bd_name
   vrf_name                    = mso_schema_template_vrf.segments[each.value.template].name # VRF name sames as Template
   display_name                = each.value.epg_display_name
+  // useg_epg                    = each.value.useg_enabled
+  // intra_epg                   = each.value.intra_epg #"unenforced"
+  // intersite_multicast_source  = each.value.intersite_multicast_source
+  // preferred_group             = each.value.preferred_group
+}
+
+resource "mso_schema_template_anp_epg" "epg" {
+  schema_id                   = mso_schema.schema.id
+  template_name               = mso_schema_template.segments["hr"].name
+  anp_name                    = mso_schema_template_anp.anp["hrapp1"].name
+  name                        = "test"
+  // bd_name                     = each.value.bd_name
+  vrf_name                    = mso_schema_template_vrf.segments["hr"].name # VRF name sames as Template
+  display_name                = "test epg"
   // useg_epg                    = each.value.useg_enabled
   // intra_epg                   = each.value.intra_epg #"unenforced"
   // intersite_multicast_source  = each.value.intersite_multicast_source
