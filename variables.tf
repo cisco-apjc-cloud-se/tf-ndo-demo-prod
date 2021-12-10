@@ -6,7 +6,7 @@ variable "schema_name" {
   type = string
 }
 
-variable "template_name" {
+variable "shared_template_name" {
   type = string
 }
 
