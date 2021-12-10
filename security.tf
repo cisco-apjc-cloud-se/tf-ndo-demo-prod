@@ -90,9 +90,31 @@ resource "mso_schema_template_anp_epg_selector" "selector" {
   }
 }
 
+### Application EPG Selectors - On-Premise Domain ###
+resource "mso_schema_site_anp_epg_domain" "vmm" {
+  for_each = local.appepgmap
 
+  schema_id                   = mso_schema.schema.id
+  template_name               = mso_schema_template.segments[each.value.template].name
+  site_id                     = data.mso_site.sites["CPOC-SYD-DMZ"].id
+  anp_name                    = each.value.app_name
+  epg_name                    = each.value.epg_name
+  domain_type                 = "vmmDomain"
+  dn                          = "CPOC-SE-VC-HX"
+  deploy_immediacy            = "lazy" # mandatory?
+  resolution_immediacy        = "lazy" # mandatory
+  // vlan_encap_mode = "static"
+  // allow_micro_segmentation = true
+  // switching_mode = "native"
+  // switch_type = "default"
+  // micro_seg_vlan_type = "vlan"
+  // micro_seg_vlan = 46
+  // port_encap_vlan_type = "vlan"
+  // port_encap_vlan = 45
+  // enhanced_lag_policy_name = "name"
+  // enhanced_lag_policy_dn = "dn"
 
-
+}
 
 ### External EPGs ###
 
