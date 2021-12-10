@@ -47,10 +47,10 @@ resource "mso_schema_template_anp_epg" "epg" {
   bd_name                     = each.value.bd_name
   vrf_name                    = mso_schema_template_vrf.segments[each.value.template].name # VRF name sames as Template
   display_name                = each.value.epg_display_name
-  useg_epg                    = each.value.useg_enabled
-  intra_epg                   = each.value.intra_epg #"unenforced"
-  intersite_multicast_source  = each.value.intersite_multicast_source
-  preferred_group             = each.value.preferred_group
+  // useg_epg                    = each.value.useg_enabled
+  // intra_epg                   = each.value.intra_epg #"unenforced"
+  // intersite_multicast_source  = each.value.intersite_multicast_source
+  // preferred_group             = each.value.preferred_group
 }
 
 ### External EPGs ###
