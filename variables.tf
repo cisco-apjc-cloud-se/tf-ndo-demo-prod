@@ -62,7 +62,7 @@ variable "applications" {
     epgs = map(object({
       name = string
       display_name = string
-      // bd_name = string
+      bd_name = string
       // useg_enabled = bool
       // intra_epg = string
       // intersite_multicast_source = bool
