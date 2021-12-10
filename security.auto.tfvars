@@ -9,10 +9,20 @@ applications = {
       web = {
         name = "web"
         display_name = "Web Tier"
+        bd_name = ""
+        useg_enabled = false
+        intra_epg = "unenforced"
+        intersite_multicast_source = false
+        preferred_group = false
       }
       db = {
         name = "db"
         display_name = "Database Tier"
+        bd_name = ""
+        useg_enabled = false
+        intra_epg = "unenforced"
+        intersite_multicast_source = false
+        preferred_group = false
       }
     }
   }
@@ -24,10 +34,20 @@ applications = {
       web = {
         name = "web"
         display_name = "Web Tier"
+        bd_name = ""
+        useg_enabled = false
+        intra_epg = "unenforced"
+        intersite_multicast_source = false
+        preferred_group = false
       }
       db = {
         name = "db"
         display_name = "Database Tier"
+        bd_name = ""
+        useg_enabled = false
+        intra_epg = "unenforced"
+        intersite_multicast_source = false
+        preferred_group = false
       }
     }
   }

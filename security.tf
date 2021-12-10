@@ -11,24 +11,47 @@ resource "mso_schema_template_anp" "anp" {
 
 ## Need parallelism?? for multiple ANPs
 
-
-
+locals {
+   appepglist = flatten([
+    for app_key, app in var.applications : [
+      for epg_key, epg in app.epgs :
+        {
+          app_name                    = app.name
+          template                    = app.template
+          epg_name                    = epg.name
+          epg_display_name            = epg.display_name
+          bd_name                     = epg.bd_name
+          useg_enabled                = epg.useg_enabled
+          intra_epg                   = epg.intra_epg
+          intersite_multicast_source  = epg.intersite_multicast_source
+          preferred_group             = epg.preferred_group
+        }
+        // if site.type != "aci"
+    ]
+  ])
+  appepgmap = {
+    for val in local.appepglist:
+      lower(format("%s-%s", val["app_name"], val["epg_name"])) => val
+  }
+}
 
 
 ### Application EPGs ###
-// resource "mso_schema_template_anp_epg" "anp_epg" {
-//   schema_id = "5c4d5bb72700000401f80948"
-//   template_name = "Template1"
-//   anp_name = "ANP"
-//   name = "mso_epg1"
-//   bd_name = "BD1"
-//   vrf_name = "DEVNET-VRF"
-//   display_name = "mso_epg1"
-//   useg_epg = true
-//   intra_epg = "unenforced"
-//   intersite_multicast_source = false
-//   preferred_group = false
-// }
+resource "mso_schema_template_anp_epg" "epg" {
+  for_each = local.appepgmap
+
+  schema_id                   = mso_schema.schema.id
+  template_name               = mso_schema_template.segments[each.value.template].name
+  anp_name                    = each.value.app_name
+  name                        = each.value.epg_name
+  bd_name                     = each.value.bd_name
+  vrf_name                    = mso_schema_template_vrf.segments[each.value.template].name # VRF name sames as Template
+  display_name                = each.value.display_name
+  useg_epg                    = each.value.useg_enabled
+  intra_epg                   = each.value.intra_epg #"unenforced"
+  intersite_multicast_source  = each.value.intersite_multicast_source
+  preferred_group             = each.value.preferred_group
+}
 
 ### External EPGs ###
 
