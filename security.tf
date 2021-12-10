@@ -21,10 +21,10 @@ locals {
           epg_name                    = epg.name
           epg_display_name            = epg.display_name
           // bd_name                     = epg.bd_name
-          useg_enabled                = epg.useg_enabled
-          intra_epg                   = epg.intra_epg
-          intersite_multicast_source  = epg.intersite_multicast_source
-          preferred_group             = epg.preferred_group
+          // useg_enabled                = epg.useg_enabled
+          // intra_epg                   = epg.intra_epg
+          // intersite_multicast_source  = epg.intersite_multicast_source
+          // preferred_group             = epg.preferred_group
         }
         // if site.type != "aci"
     ]
