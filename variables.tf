@@ -87,7 +87,7 @@ variable "users" {
     name = string
     display_name = string
     type = string
-    site = list(string)
+    sites = list(string)
     anp = string
     segment = string
     ip = string
