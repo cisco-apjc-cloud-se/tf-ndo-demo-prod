@@ -35,6 +35,7 @@ variable "segments" {
           }))
         }))
       }))
+      vmm_domain = string
       bds = map(object({
         name = string
         display_name = string
@@ -54,9 +55,9 @@ variable "segments" {
   }))
 }
 
-variable "aci_vmm_domain" {
-  type = string
-}
+// variable "aci_vmm_domain" {
+//   type = string
+// }
 
 variable "applications" {
   type = map(object({

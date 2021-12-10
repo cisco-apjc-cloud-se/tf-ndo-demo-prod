@@ -55,6 +55,25 @@ locals {
    for val in local.appepgselectorlist:
      lower(format("%s-%s-%s", val["app_name"], val["epg_name"], val["selector_name"])) => val
  }
+ ## On-Prem Sites for Domain EPG ##
+ appepgsitelist = flatten([
+  for epg_key, epg in local.appepgmap : [
+    for site_key, site in epg.sites :
+      {
+        app_name       = epg.app_name
+        segment        = epg.segment
+        epg_name       = epg.epg_name
+        site_name      = site.name
+        vmm_domain     = site.vmm_domain
+      }
+      if site.type == "aci"
+      ]
+  ])
+  appepgsitemap = {
+    for val in local.appepgsitelist:
+      lower(format("%s-%s-%s", val["app_name"], val["epg_name"], val["site_name"])) => val
+  }
+
 }
 
 output "appepgmap" {
@@ -98,15 +117,15 @@ resource "mso_schema_template_anp_epg_selector" "selector" {
 ### Application EPG Selectors - On-Premise Domain ###
 resource "mso_schema_site_anp_epg_domain" "vmm" {
   # Flatten with on-prem type sites?
-  for_each = local.appepgmap
+  for_each = local.appepgsitemap
 
   schema_id                   = mso_schema.schema.id
   template_name               = mso_schema_template.segments[each.value.segment].name
-  site_id                     = data.mso_site.sites["CPOC-SYD-DMZ"].id # Initally Hard Coded
+  site_id                     = data.mso_site.sites[each.value.site_name].id
   anp_name                    = each.value.app_name
   epg_name                    = each.value.epg_name
   domain_type                 = "vmmDomain"
-  dn                          = var.aci_vmm_domain
+  dn                          = each.value.vmm_domain
   deploy_immediacy            = "lazy" # mandatory?
   resolution_immediacy        = "lazy" # mandatory
   // vlan_encap_mode = "static"

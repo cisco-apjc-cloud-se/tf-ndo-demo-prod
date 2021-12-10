@@ -3,8 +3,8 @@ tenant = "Production"
 schema_name = "Prod|MultiCloudDemo"
 template_name = "Prod|Shared"
 
-### On-Premise Details ###
-aci_vmm_domain = "CPOC-SE-VC-HX"
+# ### On-Premise Details ###
+# aci_vmm_domain = "CPOC-SE-VC-HX"
 
 ### Enabled Sites for Templates  ###
 sites = [
@@ -94,12 +94,14 @@ segments = {
             }
           }
         }
+        vmm_domain = ""
         bds = {}
       }
       cpoc-syd-dmz = {
         type = "aci"
         name = "CPOC-SYD-DMZ"
         regions = {}
+        vmm_domain = "CPOC-SE-VC-HX"
         bds = {
           bd1 = {
             name                    = "tf-mcdemo-bd1"
