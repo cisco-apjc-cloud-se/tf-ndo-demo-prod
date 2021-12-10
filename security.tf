@@ -57,6 +57,10 @@ locals {
  }
 }
 
+output "appepgmap" {
+  value = local.appepgmap
+}
+
 
 ### Application EPGs ###
 resource "mso_schema_template_anp_epg" "epg" {
