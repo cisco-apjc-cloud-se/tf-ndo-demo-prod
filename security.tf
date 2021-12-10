@@ -25,6 +25,7 @@ locals {
           // intra_epg                   = epg.intra_epg
           // intersite_multicast_source  = epg.intersite_multicast_source
           // preferred_group             = epg.preferred_group
+          selectors                   = epg.selectors
         }
         // if site.type != "aci"
     ]
@@ -88,6 +89,8 @@ resource "mso_schema_template_anp_epg_selector" "selector" {
     value       = each.value.value
   }
 }
+
+
 
 
 
