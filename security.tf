@@ -37,28 +37,28 @@ locals {
 
 
 ### Application EPGs ###
-resource "mso_schema_template_anp_epg" "epg" {
-  for_each = local.appepgmap
-
-  schema_id                   = mso_schema.schema.id
-  template_name               = mso_schema_template.segments[each.value.template].name
-  anp_name                    = each.value.app_name
-  name                        = each.value.epg_name
-  // bd_name                     = each.value.bd_name  # "unspecified"
-  vrf_name                    = mso_schema_template_vrf.segments[each.value.template].name # VRF name sames as Template
-  display_name                = each.value.epg_display_name
-  // useg_epg                    = each.value.useg_enabled
-  // intra_epg                   = each.value.intra_epg #"unenforced"
-  // intersite_multicast_source  = each.value.intersite_multicast_source
-  // preferred_group             = each.value.preferred_group
-}
+// resource "mso_schema_template_anp_epg" "epg" {
+//   for_each = local.appepgmap
+//
+//   schema_id                   = mso_schema.schema.id
+//   template_name               = mso_schema_template.segments[each.value.template].name
+//   anp_name                    = each.value.app_name
+//   name                        = each.value.epg_name
+//   // bd_name                     = each.value.bd_name  # "unspecified"
+//   vrf_name                    = mso_schema_template_vrf.segments[each.value.template].name # VRF name sames as Template
+//   display_name                = each.value.epg_display_name
+//   // useg_epg                    = each.value.useg_enabled
+//   // intra_epg                   = each.value.intra_epg #"unenforced"
+//   // intersite_multicast_source  = each.value.intersite_multicast_source
+//   // preferred_group             = each.value.preferred_group
+// }
 
 resource "mso_schema_template_anp_epg" "test" {
   schema_id                   = mso_schema.schema.id
   template_name               = mso_schema_template.segments["hr"].name
   anp_name                    = mso_schema_template_anp.anp["hrapp1"].name
   name                        = "test"
-  // bd_name                     = each.value.bd_name
+  bd_name                     = "unspecified"
   vrf_name                    = mso_schema_template_vrf.segments["hr"].name # VRF name sames as Template
   display_name                = "test epg"
   // useg_epg                    = each.value.useg_enabled
