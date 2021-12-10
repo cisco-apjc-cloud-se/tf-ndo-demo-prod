@@ -81,3 +81,15 @@ variable "applications" {
     }))
   }))
 }
+
+variable "users" {
+  type = map(object({
+    name = string
+    display_name = string
+    type = string
+    site = list(string)
+    anp = string
+    segment = string
+    ip = string
+  }))
+}
