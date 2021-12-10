@@ -33,6 +33,26 @@ locals {
     for val in local.appepglist:
       lower(format("%s-%s", val["app_name"], val["epg_name"])) => val
   }
+
+  appepgselectorlist = flatten([
+   for epg_key, epg in local.appepgmap : [
+     for sel_key, selector in epg.selectors :
+       {
+         app_name       = epg.app_name
+         template       = epg.template
+         epg_name       = epg.epg_name
+         selector_name  = selector.name
+         key            = selector.key
+         operator       = selector.operator
+         value          = selector.value
+       }
+       // if site.type != "aci"
+   ]
+ ])
+ appepgselectormap = {
+   for val in local.appepgselectorlist:
+     lower(format("%s-%s-%s", val["app_name"], val["epg_name"], val["selector_name"])) => val
+ }
 }
 
 
@@ -52,6 +72,22 @@ resource "mso_schema_template_anp_epg" "epg" {
   // intersite_multicast_source  = each.value.intersite_multicast_source
   // preferred_group             = each.value.preferred_group
 }
+
+resource "mso_schema_template_anp_epg_selector" "selector" {
+  for_each = local.appepgselectormap
+
+  schema_id                   = mso_schema.schema.id
+  template_name               = mso_schema_template.segments[each.value.template].name
+  anp_name                    = each.value.app_name
+  epg_name                    = each.value.epg_name
+  name                        = each.value.selector_name
+  expressions {
+    key         = each.value.key
+    operator    = each.value.operator
+    value       = each.value.value
+  }
+}
+
 
 // resource "mso_schema_template_anp_epg" "test" {
 //   schema_id                   = mso_schema.schema.id

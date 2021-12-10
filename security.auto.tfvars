@@ -14,11 +14,27 @@ applications = {
         # intra_epg = "unenforced"
         # intersite_multicast_source = false
         # preferred_group = false
+        selectors = {
+          sel1 = {
+            name = "web"
+            key = "Custom:EPG"
+            operator = "equals"
+            value = "web"
+          }
+        }
       }
       db = {
         name = "db"
         display_name = "Database Tier"
         bd_name = "unspecified"
+        selectors = {
+          sel1 = {
+            name = "db"
+            key = "Custom:db"
+            operator = "equals"
+            value = "db"
+          }
+        }
       }
     }
   }
@@ -31,11 +47,27 @@ applications = {
         name = "web"
         display_name = "Web Tier"
         bd_name = "unspecified"
+        selectors = {
+          sel1 = {
+            name = "web"
+            key = "Custom:EPG"
+            operator = "equals"
+            value = "web"
+          }
+        }
       }
       db = {
         name = "db"
         display_name = "Database Tier"
         bd_name = "unspecified"
+        selectors = {
+          sel1 = {
+            name = "db"
+            key = "Custom:db"
+            operator = "equals"
+            value = "db"
+          }
+        }
       }
     }
   }

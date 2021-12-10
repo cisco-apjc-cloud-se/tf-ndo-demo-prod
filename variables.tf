@@ -67,6 +67,12 @@ variable "applications" {
       // intra_epg = string
       // intersite_multicast_source = bool
       // preferred_group = bool
+      selectors = map(object({
+        name = string
+        key = string
+        operator = string
+        value = string
+        }))
     }))
   }))
 }
