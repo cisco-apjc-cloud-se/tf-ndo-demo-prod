@@ -30,7 +30,7 @@ applications = {
         selectors = {
           sel1 = {
             name = "db"
-            key = "Custom:db"
+            key = "Custom:EPG"
             operator = "equals"
             value = "db"
           }
@@ -63,7 +63,7 @@ applications = {
         selectors = {
           sel1 = {
             name = "db"
-            key = "Custom:db"
+            key = "Custom:EPG"
             operator = "equals"
             value = "db"
           }
