@@ -5,8 +5,8 @@ users = {
     display_name = "Cloud Public Internet"
     type = "cloud"
     sites = [
-      "AWS-SYD",
-      "AZURE-MEL"
+      "AWS-SYD"
+      # "AZURE-MEL"
       # "CPOC-SYD-DMZ"
     ]
     anp = "shared"
