@@ -26,7 +26,7 @@ locals {
           // intersite_multicast_source  = epg.intersite_multicast_source
           // preferred_group             = epg.preferred_group
           selectors                   = epg.selectors
-          sites                       = lookup(var.segments, app.segment).sites
+          sites                       = lookup(var.segments, app.segment).sites  # replace with map[key]
         }
         // if site.type != "aci"
     ]
@@ -143,6 +143,8 @@ resource "mso_schema_site_anp_epg_domain" "vmm" {
 
 ### External EPGs ###
 # NOTE: Doesn't work until VRF configured per Site
+# Seems to have issues with VRF name???
+
 resource "mso_schema_template_external_epg" "users" {
   for_each = var.users
 
@@ -153,7 +155,7 @@ resource "mso_schema_template_external_epg" "users" {
   display_name        = each.value.display_name
   vrf_name            = mso_schema_template_vrf.segments[each.value.segment].name # VRF name sames as Template
   anp_name            = each.value.anp
-  # l3out_name          = "temp"
+  l3out_name          = ""
   site_id             = [ for site_name in each.value.sites :  data.mso_site.sites[site_name].id ]  ## List?
   selector_name       = each.value.name # use epg_name
   selector_ip         = each.value.ip

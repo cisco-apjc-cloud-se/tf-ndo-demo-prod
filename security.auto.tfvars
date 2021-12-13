@@ -18,7 +18,7 @@ users = {
 applications = {
   shared = {
     name = "shared"
-    display_name = "Shared Applications & User Groups"
+    display_name = "Shared Applications and User Groups"
     segment = "hr"  ## shared template
     epgs = {}
   }
