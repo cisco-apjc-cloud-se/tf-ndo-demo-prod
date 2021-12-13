@@ -295,7 +295,7 @@ resource "mso_schema_template_anp_epg_contract" "apps" {
 
   // May not be required..
   depends_on = [
-    mso_schema_template_contract.contracts
+    mso_schema_template_contract.contracts,
     mso_schema_template_anp_epg.epg
   ]
 }
@@ -312,7 +312,7 @@ resource "mso_schema_template_external_epg_contract" "users" {
 
   // May not be required..
   depends_on = [
-    mso_schema_template_contract.contracts
+    mso_schema_template_contract.contracts,
     mso_schema_template_external_epg.users
   ]
 }
