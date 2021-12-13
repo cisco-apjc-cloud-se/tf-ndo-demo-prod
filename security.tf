@@ -21,10 +21,10 @@ locals {
           epg_name                    = epg.name
           epg_display_name            = epg.display_name
           bd_name                     = epg.bd_name
-          // useg_enabled                = epg.useg_enabled
-          // intra_epg                   = epg.intra_epg
-          // intersite_multicast_source  = epg.intersite_multicast_source
-          // preferred_group             = epg.preferred_group
+          useg_enabled                = try(epg.useg_enabled, "unspecified")
+          intra_epg                   = try(epg.intra_epg, "unspecified")
+          intersite_multicast_source  = try(epg.intersite_multicast_source, "unspecified")
+          preferred_group             = try(epg.preferred_group, "unspecified")
           selectors                   = epg.selectors
           sites                       = lookup(var.segments, app.segment).sites  # replace with map[key]
           contracts                   = epg.contracts
@@ -153,10 +153,10 @@ resource "mso_schema_template_anp_epg" "epg" {
   bd_name                     = each.value.bd_name  # "unspecified"
   vrf_name                    = mso_schema_template_vrf.segments[each.value.segment].name # VRF name sames as Template
   display_name                = each.value.epg_display_name
-  // useg_epg                    = each.value.useg_enabled
-  // intra_epg                   = each.value.intra_epg #"unenforced"
-  // intersite_multicast_source  = each.value.intersite_multicast_source
-  // preferred_group             = each.value.preferred_group
+  useg_epg                    = each.value.useg_enabled
+  intra_epg                   = each.value.intra_epg #"unenforced"
+  intersite_multicast_source  = each.value.intersite_multicast_source
+  preferred_group             = each.value.preferred_group
 }
 
 ### Application EPG Selectors - Cloud ###
