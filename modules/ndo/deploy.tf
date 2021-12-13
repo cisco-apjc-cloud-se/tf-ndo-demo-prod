@@ -1,9 +1,9 @@
 locals {
-  deploycheck = var.undeploy == false ? var.segments : {}
+  deploycheck = var.undeploy == false ? var.segments : null
 }
 
 locals {
-  undeploycheck = var.undeploy == true ? merge(local.cloudsitemap, local.acisitemap) : {}
+  undeploycheck = var.undeploy == true ? merge(local.cloudsitemap, local.acisitemap) : null
 }
 
 
