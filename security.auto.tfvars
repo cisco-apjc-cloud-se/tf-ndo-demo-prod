@@ -47,8 +47,8 @@ filters = {
         description   = "Allow SSH TCP 22"
         ether_type    = "ip"
         ip_protocol   = "tcp"
-        destination_from = "22"
-        destination_to = "22"
+        destination_from = "ssh" # preset value
+        destination_to = "ssh" # preset value
         # source_from = "unspecified"
         # source_to = "unspecified"
       }
@@ -83,8 +83,8 @@ filters = {
         description   = "Allow HTTP TCP 80"
         ether_type    = "ip"
         ip_protocol   = "tcp"
-        destination_from = "80" # maybe http?
-        destination_to = "80" # maybe http?
+        destination_from = "http" # preset value
+        destination_to = "http" # preset value
         # source_from = "unspecified"
         # source_to = "unspecified"
       }
@@ -94,8 +94,8 @@ filters = {
         description   = "Allow HTTPS TCP 443"
         ether_type    = "ip"
         ip_protocol   = "tcp"
-        destination_from = "443" # maybe http?
-        destination_to = "443" # maybe http?
+        destination_from = "https" # preset value
+        destination_to = "https" # preset value
         # source_from = "unspecified"
         # source_to = "unspecified"
       }
