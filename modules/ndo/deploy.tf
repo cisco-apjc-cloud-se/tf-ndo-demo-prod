@@ -9,24 +9,24 @@
 // }
 
 
-locals {
-  mergedsites =  merge(local.cloudsitemap, local.acisitemap)
-}
+// locals {
+//   mergedsites =  merge(local.cloudsitemap, local.acisitemap)
+// }
 
-locals {
-  testseg =  merge(var.segments, {})
-}
+// locals {
+//   testseg =  merge(var.segments, {})
+// }
 
 
 
 ### Deploy Trigger ###
 resource "mso_schema_template_deploy" "deploy" {
   // for_each = var.segments
-  for_each = var.undeploy == false ? local.testseg : local.mergedsites
+  for_each = merge(local.cloudsitemap, local.acisitemap)
 
   schema_id       = mso_schema.schema.id
   template_name   = each.value.name
-  site_id         = try(data.mso_site.sites[each.value.site_name].id, "unspecified")
+  site_id         = var.undeploy == true ? data.mso_site.sites[each.value.site_name].id : "unspecified"
   undeploy        = var.undeploy
 
   depends_on = [mso_schema_site_vrf_region.region, mso_schema_template_bd_subnet.subnet]
