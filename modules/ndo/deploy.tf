@@ -9,9 +9,9 @@
 // }
 
 
-// locals {
-//   mergedsites =  merge(local.cloudsitemap, local.acisitemap)
-// }
+locals {
+  mergedsites =  merge(local.cloudsitemap, local.acisitemap)
+}
 
 // locals {
 //   testseg =  merge(var.segments, {})
@@ -22,7 +22,7 @@
 ### Deploy Trigger ###
 resource "mso_schema_template_deploy" "deploy" {
   // for_each = var.segments
-  for_each = merge(local.cloudsitemap, local.acisitemap)
+  for_each = local.mergedsites
 
   schema_id       = mso_schema.schema.id
   template_name   = each.value.name
