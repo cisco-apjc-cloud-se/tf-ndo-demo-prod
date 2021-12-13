@@ -10,7 +10,7 @@ locals {
 ### Deploy Trigger ###
 resource "mso_schema_template_deploy" "deploy" {
   // for_each = var.segments
-  for_each = try(local.deploycheck, map(object({})))
+  for_each = var.undeploy == false ? var.segments : {}
 
   schema_id       = mso_schema.schema.id
   template_name   = each.value.name
@@ -20,8 +20,7 @@ resource "mso_schema_template_deploy" "deploy" {
 
 ### Undeploy Trigger ####
 resource "mso_schema_template_deploy" "undeploy" {
-  // for_each = merge(local.cloudsitemap, local.acisitemap)
-  for_each = try(local.undeploycheck, map(object({})))
+  for_each = var.undeploy == true? merge(local.cloudsitemap, local.acisitemap) : {}
 
   schema_id       = mso_schema.schema.id
   template_name   = each.value.segment_name
