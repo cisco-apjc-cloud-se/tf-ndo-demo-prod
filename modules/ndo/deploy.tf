@@ -3,14 +3,6 @@ locals {
   undeploycheck = var.undeploy == true ? merge(local.cloudsitemap, local.acisitemap) : null
 }
 
-output "deploycheck" {
-  value = local.deploycheck
-}
-
-output "undeploycheck" {
-  value = local.undeploycheck
-}
-
 
 // ### Deploy Trigger ###
 // resource "mso_schema_template_deploy" "deploy" {

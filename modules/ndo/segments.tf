@@ -121,22 +121,6 @@ locals {
 
 }
 
-output "cloudsitemap" {
-  value = local.cloudsitemap
-}
-
-output "regionmap" {
-  value = local.regionmap
-}
-
-output "acibdmap" {
-  value = local.acibdmap
-}
-
-output "acibdsubmap" {
-  value = local.acibdsubmap
-}
-
 ## Bind Schema/Template to Sites ##
 resource "mso_schema_site" "sites" {
   ## Merged Cloud & ACI Sites

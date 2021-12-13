@@ -137,9 +137,7 @@ locals {
 
 }
 
-output "appepgmap" {
-  value = local.appepgmap
-}
+
 
 
 ### Application EPGs ###
