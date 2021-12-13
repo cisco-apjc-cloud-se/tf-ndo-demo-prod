@@ -1,12 +1,12 @@
-locals {
-  deploycheck = var.undeploy == false ? var.segments : {}
-  // deploycheck =  var.undeploy == false ? flatten(var.segments) : []
-}
-
-locals {
-  // undeploycheck = var.undeploy == true ? merge(local.cloudsitemap, local.acisitemap) : null
-  undeploycheck =  var.undeploy == true ? flatten(merge(local.cloudsitemap, local.acisitemap)) : []
-}
+// locals {
+//   deploycheck = var.undeploy == false ? var.segments : {}
+//   // deploycheck =  var.undeploy == false ? flatten(var.segments) : []
+// }
+//
+// locals {
+//   // undeploycheck = var.undeploy == true ? merge(local.cloudsitemap, local.acisitemap) : null
+//   undeploycheck =  var.undeploy == true ? flatten(merge(local.cloudsitemap, local.acisitemap)) : []
+// }
 
 locals {
   mergedsites =  merge(local.cloudsitemap, local.acisitemap)
