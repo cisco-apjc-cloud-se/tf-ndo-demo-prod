@@ -25,12 +25,14 @@ terraform {
 
 provider "mso" {
   // username = data.vault_generic_secret.cpoc-ndo.data["username"]
-  username  = var.username
+  username = "test"
+  // username  = var.username
   // password = data.vault_generic_secret.cpoc-ndo.data["password"]
-  password  = var.password
+  password = "test"
+  // password  = var.password
   # url      = "https://aws-syd-ase-n1.mel.ciscolabs.com/mso/"
-  // url      = "https://100.64.62.122/mso"
-  url       = var.url
+  url      = "https://100.64.62.122/mso"
+  // url       = var.url
   insecure  = true
   platform  = "nd"
 }
