@@ -9,10 +9,10 @@ terraform {
   //   }
   // }
   required_providers {
-    vault = {
-      source = "hashicorp/vault"
-      # version = "2.18.0"
-    }
+    // vault = {
+    //   source = "hashicorp/vault"
+    //   # version = "2.18.0"
+    // }
     mso = {
       source = "CiscoDevNet/mso"
       # version = "~> 0.1.5"
