@@ -173,6 +173,11 @@ resource "mso_schema_template_anp_epg_selector" "selector" {
     operator    = each.value.operator
     value       = each.value.value
   }
+
+  // May not be required...
+  depends_on = [
+    mso_schema_template_anp_epg.epg
+  ]
 }
 
 ### Application EPG Selectors - On-Premise Domain ###
@@ -270,6 +275,11 @@ resource "mso_schema_template_contract" "contracts" {
     }
   }
 
+  // May not be required..
+  depends_on = [
+    mso_schema_template_filter_entry.filters
+  ]
+
 }
 
 ## Map App EPGs to Contracts ##
@@ -282,6 +292,12 @@ resource "mso_schema_template_anp_epg_contract" "apps" {
   epg_name                    = each.value.epg_name
   contract_name               = each.value.contract_name
   relationship_type           = each.value.relationship_type
+
+  // May not be required..
+  depends_on = [
+    mso_schema_template_contract.contracts
+    mso_schema_template_anp_epg.epg
+  ]
 }
 
 ## Map External EPGs to Contracts ##
@@ -293,4 +309,10 @@ resource "mso_schema_template_external_epg_contract" "users" {
   contract_name               = each.value.contract_name
   external_epg_name           = each.value.external_epg_name
   relationship_type           = each.value.relationship_type
+
+  // May not be required..
+  depends_on = [
+    mso_schema_template_contract.contracts
+    mso_schema_template_external_epg.users
+  ]
 }
