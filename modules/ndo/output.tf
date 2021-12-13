@@ -25,3 +25,7 @@ output "deploycheck" {
 output "undeploycheck" {
   value = local.deploycheck
 }
+
+output "undeploy" {
+  value = var.undeploy
+}

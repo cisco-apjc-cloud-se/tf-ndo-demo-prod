@@ -1,19 +1,19 @@
 variable "undeploy" {
   type = bool
 }
-
-variable "username" {
-  type = string
-}
-
-variable "password" {
-  type = string
-  sensitive = true
-}
-
-variable "url" {
-  type = string
-}
+// 
+// variable "username" {
+//   type = string
+// }
+//
+// variable "password" {
+//   type = string
+//   sensitive = true
+// }
+//
+// variable "url" {
+//   type = string
+// }
 
 variable "tenant" {
   type = string

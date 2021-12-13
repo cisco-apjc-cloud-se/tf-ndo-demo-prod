@@ -31,14 +31,14 @@ provider "mso" {
   platform = "nd"
 }
 
-## Common Setup - Schema, Template, VRFs etc
+## Multi-Cloud Networking Module (Cisco NDO/Cloud ACI) ##
 module "ndo" {
   source = "./modules/ndo"
 
   ## General ##
-  username      = data.vault_generic_secret.cpoc-ndo.data["username"]
-  password      = data.vault_generic_secret.cpoc-ndo.data["password"]
-  url           = "https://100.64.62.122/mso"
+  // username      = data.vault_generic_secret.cpoc-ndo.data["username"]
+  // password      = data.vault_generic_secret.cpoc-ndo.data["password"]
+  // url           = "https://100.64.62.122/mso"
   undeploy      = false
 
   ## Network Policy Inputs ##
