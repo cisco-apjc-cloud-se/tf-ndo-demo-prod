@@ -77,12 +77,13 @@ variable "applications" {
         key = string
         operator = string
         value = string
-        }))
+      }))
+      contracts = map(object({
+        name = string
+        relationship_type = string
+      }))
     }))
-    contracts = map(object({
-      name = string
-      relationship_type = string
-    }))
+
   }))
 }
 

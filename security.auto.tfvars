@@ -71,7 +71,6 @@ applications = {
     display_name = "Shared Applications and User Groups"
     segment = "hr"  ## shared template
     epgs = {}
-    contracts = {}
   }
   hrapp1 = {
     name = "hrapp1"
@@ -94,6 +93,12 @@ applications = {
             value = "web"
           }
         }
+        contracts = {
+          prov1 = {
+            name = "public-to-hr-app1"
+            relationship_type = "provider"
+          }
+        }
       }
       db = {
         name = "db"
@@ -107,12 +112,7 @@ applications = {
             value = "db"
           }
         }
-      }
-    }
-    contracts = {
-      prov1 = {
-        name = "public-to-hr-app1"
-        relationship_type = "provider"
+        contracts = {}
       }
     }
   }
@@ -133,6 +133,7 @@ applications = {
             value = "web"
           }
         }
+        contracts = {}
       }
       db = {
         name = "db"
@@ -146,8 +147,8 @@ applications = {
             value = "db"
           }
         }
+        contracts = {}
       }
     }
-    contracts = {}
   }
 }
