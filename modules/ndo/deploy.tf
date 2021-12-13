@@ -25,7 +25,7 @@ resource "mso_schema_template_deploy" "deploy" {
   for_each = local.mergedsites
 
   schema_id       = mso_schema.schema.id
-  template_name   = each.value.name
+  template_name   = each.value.segment_name
   site_id         = var.undeploy == true ? data.mso_site.sites[each.value.site_name].id : "unspecified"
   undeploy        = var.undeploy
 
