@@ -122,7 +122,7 @@ locals {
    for user_key, user in var.users : [
      for con_key, contract in user.contracts :
        {
-         external_epg_name  = user.external_epg_name
+         external_epg_name  = user.name
          contract_name      = contract.name
          relationship_type  = contract.relationship_type
        }
