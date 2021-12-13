@@ -8,9 +8,15 @@
 //   undeploycheck =  var.undeploy == true ? flatten(merge(local.cloudsitemap, local.acisitemap)) : []
 // }
 
+
 locals {
   mergedsites =  merge(local.cloudsitemap, local.acisitemap)
 }
+
+locals {
+  testseg =  merge(var.segment, {})
+}
+
 
 
 ### Deploy Trigger ###
