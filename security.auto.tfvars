@@ -125,7 +125,7 @@ contracts = {
         name = "allow-ssh"
       }
       allow-icmp = {
-        name = "allow-ssh"
+        name = "allow-icmp"
       }
     }
   }
@@ -149,7 +149,7 @@ contracts = {
         name = "allow-ssh"
       }
       allow-icmp = {
-        name = "allow-ssh"
+        name = "allow-icmp"
       }
     }
   }
@@ -165,7 +165,7 @@ contracts = {
         name = "allow-sql"
       }
       allow-icmp = {
-        name = "allow-ssh"
+        name = "allow-icmp"
       }
     }
   }
@@ -181,7 +181,7 @@ contracts = {
         name = "allow-sql"
       }
       allow-icmp = {
-        name = "allow-ssh"
+        name = "allow-icmp"
       }
     }
   }
