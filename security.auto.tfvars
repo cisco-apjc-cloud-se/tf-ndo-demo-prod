@@ -2,7 +2,7 @@
 filters = {
   allow-all = {
     name = "allow-all"
-    display_name = "Allow All"
+    display_name = "Allow All Traffic"
     segment = "hr"
     entries = {
       entry1 = {
@@ -38,7 +38,7 @@ filters = {
   }
   allow-ssh = {
     name = "allow-ssh"
-    display_name = "Allow SSH"
+    display_name = "Allow SSH Traffic"
     segment = "hr"
     entries = {
       entry1 = {
@@ -56,7 +56,7 @@ filters = {
   }
   allow-sql = {
     name = "allow-sql"
-    display_name = "Allow MySQL"
+    display_name = "Allow MySQL Traffic"
     segment = "hr"
     entries = {
       entry1 = {
