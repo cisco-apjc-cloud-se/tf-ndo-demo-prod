@@ -27,6 +27,7 @@ locals {
           // preferred_group             = epg.preferred_group
           selectors                   = epg.selectors
           sites                       = lookup(var.segments, app.segment).sites  # replace with map[key]
+          contracts                   = epg.contracts
         }
         // if site.type != "aci"
     ]
