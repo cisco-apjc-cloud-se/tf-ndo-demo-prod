@@ -230,7 +230,7 @@ resource "mso_schema_template_contract" "contracts" {
     content {
       # filter_schema_id      =
       # filter_template_name  =
-      filter_name = filters.name
+      filter_name = filter_relationship.name
     }
   }
 
