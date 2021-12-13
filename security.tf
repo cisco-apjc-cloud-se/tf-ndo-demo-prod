@@ -123,6 +123,7 @@ locals {
      for con_key, contract in user.contracts :
        {
          external_epg_name  = user.name
+         segment            = user.segment
          contract_name      = contract.name
          relationship_type  = contract.relationship_type
        }
