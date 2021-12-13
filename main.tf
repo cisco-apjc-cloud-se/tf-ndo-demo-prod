@@ -39,7 +39,7 @@ module "ndo" {
   // username      = data.vault_generic_secret.cpoc-ndo.data["username"]
   // password      = data.vault_generic_secret.cpoc-ndo.data["password"]
   // url           = "https://100.64.62.122/mso"
-  undeploy      = true
+  undeploy  = false # Set true to undeploy before destroying
 
   ## Network Policy Inputs ##
   tenant                = var.tenant

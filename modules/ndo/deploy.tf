@@ -17,6 +17,9 @@ locals {
 //   testseg =  merge(var.segments, {})
 // }
 
+locals {
+  prevent_destroy = var.undeploy == true ? false : true
+}
 
 
 ### Deploy Trigger ###
