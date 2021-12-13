@@ -16,7 +16,7 @@ locals {
 ### Deploy Trigger ###
 resource "mso_schema_template_deploy" "deploy" {
   // for_each = var.segments
-  for_each = var.undeploy == false ? var.segments : tomap(local.mergedsites)
+  for_each = var.undeploy == false ? var.segments : {}
 
   schema_id       = mso_schema.schema.id
   template_name   = each.value.name
