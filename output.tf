@@ -3,7 +3,7 @@ output "deploycheck" {
 }
 
 output "undeploycheck" {
-  value = module.ndo.deploycheck
+  value = module.ndo.undeploycheck
 }
 
 output "undeploy" {

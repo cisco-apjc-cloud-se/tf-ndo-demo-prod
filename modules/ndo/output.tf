@@ -23,7 +23,7 @@ output "deploycheck" {
 }
 
 output "undeploycheck" {
-  value = local.deploycheck
+  value = local.undeploycheck
 }
 
 output "undeploy" {
