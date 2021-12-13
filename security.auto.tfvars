@@ -18,6 +18,89 @@ filters = {
       }
     }
   }
+  allow-icmp = {
+    name = "allow-icmp"
+    display_name = "Allow ICMP Traffic"
+    segment = "hr"
+    entries = {
+      entry1 = {
+        name          = "any-icmp"
+        display_name  = "Any ICMP"
+        description   = "Allow any ICMP protocol traffic"
+        ether_type    = "ip"
+        ip_protocol   = "icmp"
+        # destination_from = "unspecified"
+        # destination_to = "unspecified"
+        # source_from = "unspecified"
+        # source_to = "unspecified"
+      }
+    }
+  }
+  allow-ssh = {
+    name = "allow-ssh"
+    display_name = "Allow SSH"
+    segment = "hr"
+    entries = {
+      entry1 = {
+        name          = "tcp-22"
+        display_name  = "TCP 22"
+        description   = "Allow SSH TCP 22"
+        ether_type    = "ip"
+        ip_protocol   = "tcp"
+        destination_from = "22"
+        destination_to = "22"
+        # source_from = "unspecified"
+        # source_to = "unspecified"
+      }
+    }
+  }
+  allow-sql = {
+    name = "allow-sql"
+    display_name = "Allow MySQL"
+    segment = "hr"
+    entries = {
+      entry1 = {
+        name          = "tcp-3306"
+        display_name  = "TCP 3306"
+        description   = "Allow MySQL TCP 3306"
+        ether_type    = "ip"
+        ip_protocol   = "tcp"
+        destination_from = "3306"
+        destination_to = "3306"
+        # source_from = "unspecified"
+        # source_to = "unspecified"
+      }
+    }
+  }
+  allow-web = {
+    name = "allow-web"
+    display_name = "Allow Web Traffic"
+    segment = "hr"
+    entries = {
+      entry1 = {
+        name          = "tcp-80"
+        display_name  = "TCP 80"
+        description   = "Allow HTTP TCP 80"
+        ether_type    = "ip"
+        ip_protocol   = "tcp"
+        destination_from = "80" # maybe http?
+        destination_to = "80" # maybe http?
+        # source_from = "unspecified"
+        # source_to = "unspecified"
+      }
+      entry2 = {
+        name          = "tcp-443"
+        display_name  = "TCP 443"
+        description   = "Allow HTTPS TCP 443"
+        ether_type    = "ip"
+        ip_protocol   = "tcp"
+        destination_from = "443" # maybe http?
+        destination_to = "443" # maybe http?
+        # source_from = "unspecified"
+        # source_to = "unspecified"
+      }
+    }
+  }
 }
 
 
@@ -30,15 +113,77 @@ contracts = {
     context = "context"
     directives = ["none"] # None or Log as List
     filters = {
-      allow-all = {
-        name = "allow-all"
-        # schema_id = "" # For shared/common filters
-        # template_name = "" # For shared/common filters
+      # allow-all = {
+      #   name = "allow-all"
+      #   # schema_id = "" # For shared/common filters
+      #   # template_name = "" # For shared/common filters
+      # }
+      allow-web = {
+        name = "allow-web"
+      }
+      allow-ssh = {
+        name = "allow-ssh"
+      }
+      allow-icmp = {
+        name = "allow-ssh"
       }
     }
-
-    # providers = []
-    # consumers = []
+  }
+  public-hrapp2 = {
+    name = "public-to-hr-app2"
+    display_name = "Public-to-HR-App2"
+    segment = "hr"
+    filter_type = "bothWay"
+    context = "context"
+    directives = ["none"] # None or Log as List
+    filters = {
+      # allow-all = {
+      #   name = "allow-all"
+      #   # schema_id = "" # For shared/common filters
+      #   # template_name = "" # For shared/common filters
+      # }
+      allow-web = {
+        name = "allow-web"
+      }
+      allow-ssh = {
+        name = "allow-ssh"
+      }
+      allow-icmp = {
+        name = "allow-ssh"
+      }
+    }
+  }
+  hr-app1-web-to-db = {
+    name = "hr-app1-web-to-db"
+    display_name = "HR App #1 - Web to DB"
+    segment = "hr"
+    filter_type = "bothWay"
+    context = "context"
+    directives = ["none"] # None or Log as List
+    filters = {
+      allow-sql = {
+        name = "allow-sql"
+      }
+      allow-icmp = {
+        name = "allow-ssh"
+      }
+    }
+  }
+  hr-app2-web-to-db = {
+    name = "hr-app2-web-to-db"
+    display_name = "HR App #2 - Web to DB"
+    segment = "hr"
+    filter_type = "bothWay"
+    context = "context"
+    directives = ["none"] # None or Log as List
+    filters = {
+      allow-sql = {
+        name = "allow-sql"
+      }
+      allow-icmp = {
+        name = "allow-ssh"
+      }
+    }
   }
 }
 
@@ -98,6 +243,10 @@ applications = {
             name = "public-to-hr-app1"
             relationship_type = "provider"
           }
+          cons1 = {
+            name = "hr-app1-web-to-db"
+            relationship_type = "consumer"
+          }
         }
       }
       db = {
@@ -112,7 +261,12 @@ applications = {
             value = "db"
           }
         }
-        contracts = {}
+        contracts = {
+          prov1 = {
+            name = "hr-app1-web-to-db"
+            relationship_type = "provider"
+          }
+        }
       }
     }
   }
@@ -133,7 +287,16 @@ applications = {
             value = "web"
           }
         }
-        contracts = {}
+        contracts = {
+          prov1 = {
+            name = "public-to-hr-app2"
+            relationship_type = "provider"
+          }
+          cons1 = {
+            name = "hr-app2-web-to-db"
+            relationship_type = "consumer"
+          }
+        }
       }
       db = {
         name = "db"
@@ -147,7 +310,12 @@ applications = {
             value = "db"
           }
         }
-        contracts = {}
+        contracts = {
+          prov1 = {
+            name = "hr-app2-web-to-db"
+            relationship_type = "provider"
+          }
+        }
       }
     }
   }
