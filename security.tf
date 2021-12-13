@@ -228,9 +228,9 @@ resource "mso_schema_template_contract" "contracts" {
   dynamic "filter_relationship" {
     for_each = each.value.filters
     content {
-      # filter_schema_id      =
-      # filter_template_name  =
-      filter_name = filter_relationship.value.name
+      filter_schema_id      = try(filter_relationship.value.template_name, mso_schema.schema.id)
+      filter_template_name  = try(filter_relationship.value.template_name, mso_schema_template.segments[each.value.segment].name)
+      filter_name           = filter_relationship.value.name
     }
   }
 

@@ -32,6 +32,8 @@ contracts = {
     filters = {
       allow-all = {
         name = "allow-all"
+        # schema_id = "" # For shared/common filters
+        # template_name = "" # For shared/common filters
       }
     }
 

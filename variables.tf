@@ -105,6 +105,8 @@ variable "contracts" {
     directives = list(string)
     filters = map(object({
       name = string
+      schema_id = optional(string)
+      template_name = optional(string)
     }))
   }))
 }
