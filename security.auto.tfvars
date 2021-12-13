@@ -1,4 +1,21 @@
 
+filters = {
+  allow-all = {
+    name = "allow-all"
+    subject = "sub1"
+  }
+}
+
+contracts = {
+  user-app = {
+    name = "user-to-app"
+    providers = []
+    consumers = []
+    filters = []
+  }
+}
+
+
 users = {
   cloud-public = {
     name = "cloud-public"
