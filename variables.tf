@@ -99,6 +99,7 @@ variable "contracts" {
   type = map(object({
     name = string
     display_name = string
+    segment = string
     filter_type = string
     context = string
     directives = list(string)
@@ -112,6 +113,7 @@ variable "filters" {
   type = map(object({
     name = string
     display_name = string
+    segment = string
     entries = map(object({
       name = string
       display_name = string
