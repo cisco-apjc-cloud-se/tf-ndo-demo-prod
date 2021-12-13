@@ -1,7 +1,7 @@
 ### Define Tenant ###
 tenant = "Production"
-schema_name = "Prod|MultiCloudDemo"
-shared_template_name = "Prod|Shared" # shared template
+schema_name = "MultiCloudDemo"
+shared_template_name = "Shared" # shared template
 
 # ### On-Premise Details ###
 # aci_vmm_domain = "CPOC-SE-VC-HX"
