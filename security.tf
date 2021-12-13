@@ -115,8 +115,9 @@ resource "mso_schema_template_anp_epg_selector" "selector" {
 }
 
 ### Application EPG Selectors - On-Premise Domain ###
+# Open Issue re:  None.get()
+
 resource "mso_schema_site_anp_epg_domain" "vmm" {
-  # Flatten with on-prem type sites?
   for_each = local.appepgsitemap
 
   schema_id                   = mso_schema.schema.id
@@ -143,7 +144,7 @@ resource "mso_schema_site_anp_epg_domain" "vmm" {
 
 ### External EPGs ###
 # NOTE: Doesn't work until VRF configured per Site
-# Seems to have issues with VRF name???
+# Seems to have issues with VRF name - Error: "Bad Request: None.get"{} - Set VRF in GUI to fix
 
 resource "mso_schema_template_external_epg" "users" {
   for_each = var.users
@@ -154,9 +155,6 @@ resource "mso_schema_template_external_epg" "users" {
   external_epg_type   = each.value.type # "cloud"
   display_name        = each.value.display_name
   vrf_name            = mso_schema_template_vrf.segments[each.value.segment].name # VRF name sames as Template
-  vrf_schema_id       = mso_schema.schema.id
-  vrf_template_name   = mso_schema_template.segments[each.value.segment].name
-
   anp_name            = each.value.anp
   // l3out_name          = "unspecified"
   site_id             = [ for site_name in each.value.sites :  data.mso_site.sites[site_name].id ]  ## List?
