@@ -68,10 +68,10 @@ variable "applications" {
       name = string
       display_name = string
       bd_name = string
-      // useg_enabled = bool
-      // intra_epg = string
-      // intersite_multicast_source = bool
-      // preferred_group = bool
+      useg_enabled = optional(bool)
+      intra_epg = optional(string)
+      intersite_multicast_source = optional(bool)
+      preferred_group = optional(bool)
       selectors = map(object({
         name = string
         key = string
