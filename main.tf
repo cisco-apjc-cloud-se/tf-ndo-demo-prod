@@ -1,5 +1,4 @@
 terraform {
-  // experiments = [module_variable_optional_attrs]
   experiments = [module_variable_optional_attrs]
   backend "remote" {
     hostname = "app.terraform.io"
@@ -13,10 +12,10 @@ terraform {
       source = "hashicorp/vault"
       # version = "2.18.0"
     }
-    mso = {
-      source = "CiscoDevNet/mso"
-      # version = "~> 0.1.5"
-    }
+    // mso = {
+    //   source = "CiscoDevNet/mso"
+    //   # version = "~> 0.1.5"
+    // }
   }
 }
 
@@ -39,7 +38,7 @@ module "ndo" {
   ndo_username  = data.vault_generic_secret.cpoc-ndo.data["username"]
   ndo_password  = data.vault_generic_secret.cpoc-ndo.data["password"]
   url           = "https://100.64.62.122/mso"
-  undeploy = false
+  undeploy      = false
 
   ## Network Policy Inputs ##
   tenant                = var.tenant
