@@ -74,6 +74,30 @@ locals {
       lower(format("%s-%s-%s", val["app_name"], val["epg_name"], val["site_name"])) => val
   }
 
+  ## Filter & Entries ##
+  filterlist = flatten([
+   for filter_key, filter in var.filters : [
+     for entry_key, entry in filter.entries :
+       {
+         filter_name                    = filter.name
+         filter_display_name            = filter.display_name
+         entry_name                     = entry.name
+         entry_display_name             = entry.display_name
+         entry_description              = entry.description
+         ether_type                     = entry.ether_type
+         ip_protocol                    = try(entry.ip_protocol, "unspecified")
+         destination_from               = try(entry.destination_from, "unspecified")
+         destination_to                 = try(entry.destination_to, "unspecified")
+         source_from                    = try(entry.source_from, "unspecified")
+         source_to                      = try(entry.source_to, "unspecified")
+       }
+     ]
+   ])
+   filterentrymap = {
+     for val in local.filterlist:
+       lower(format("%s-%s", val["filter_name"], val["entry_name"])) => val
+   }
+
 }
 
 output "appepgmap" {
@@ -168,8 +192,45 @@ resource "mso_schema_template_external_epg" "users" {
 }
 
 ### Filters ###
+resource "mso_schema_template_filter_entry" "filters" {
+  for_each = local.filterentrymap
 
+  schema_id               = mso_schema.schema.id
+  template_name           = mso_schema_template.segments[each.value.segment].name
+  name                    = each.value.filter_name
+  display_name            = each.value.filter_display_name
 
+  entry_name              = each.value.entry_name
+  entry_display_name      = each.value.entry_display_name
+  entry_description       = each.value.entry_description
+  ether_type              = each.value.ether_type
+  ip_protocol             = each.value.ip_protocol
+  destination_from        = each.value.destination_from
+  destination_to          = each.value.destination_to
+  source_from             = each.value.source_from
+  source_to               = each.value.source_to
+}
 
 
 ### Contracts ###
+resource "mso_schema_template_contract" "contracts" {
+  for_each = var.contracts
+
+  schema_id               = mso_schema.schema.id
+  template_name           = mso_schema_template.segments[each.value.segment].name
+  contract_name           = each.value.name
+  display_name            = each.value.display_name
+  filter_type             = each.value.filter_type #"bothWay"
+  scope                   = each.value.context # "context"
+  directives              = each.value.directives # ["none"]
+
+  dynamic "filter_relationship" {
+    for_each = each.value.filters
+    content {
+      # filter_schema_id      =
+      # filter_template_name  =
+      filter_name = filters.name
+    }
+  }
+
+}

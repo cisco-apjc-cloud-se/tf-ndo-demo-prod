@@ -93,3 +93,35 @@ variable "users" {
     ip = string
   }))
 }
+
+
+variable "contracts" {
+  type = map(object({
+    name = string
+    display_name = string
+    filter_type = string
+    context = string
+    directives = list(string)
+    filters = map(object({
+      name = string
+    }))
+  }))
+}
+
+variable "filters" {
+  type = map(object({
+    name = string
+    display_name = string
+    entries = map(object({
+      name = string
+      display_name = string
+      description = string
+      ether_type = string
+      ip_protocol = optional(string)
+      destination_from = optional(string)
+      destination_to = optional(string)
+      source_from = optional(string)
+      source_to = optional(string)
+    }))
+  }))
+}

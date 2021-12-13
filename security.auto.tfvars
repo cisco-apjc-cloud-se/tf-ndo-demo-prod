@@ -1,19 +1,43 @@
-# 
-# filters = {
-#   allow-all = {
-#     name = "allow-all"
-#     subject = "sub1"
-#   }
-# }
-#
-# contracts = {
-#   user-app = {
-#     name = "user-to-app"
-#     providers = []
-#     consumers = []
-#     filters = []
-#   }
-# }
+
+filters = {
+  allow-all = {
+    name = "allow-all"
+    display_name = "Allow All"
+    # subject = "sub1"
+    entries = {
+      entry1 = {
+        name          = "any-ip"
+        display_name  = "Any IP"
+        description   = "Allow any IP protocol traffic"
+        ether_type    = "ip"
+        # ip_protocol = "unspecified"
+        # destination_from = "unspecified"
+        # destination_to = "unspecified"
+        # source_from = "unspecified"
+        # source_to = "unspecified"
+      }
+    }
+  }
+}
+
+
+contracts = {
+  public-hrapp1 = {
+    name = "public-to-hr-app1"
+    display_name = "Public-to-HR-App1"
+    filter_type = "bothWay"
+    context = "context"
+    directives = ["none"]
+    filters = {
+      allow-all = {
+        name = "allow-all"
+      }
+    }
+
+    # providers = []
+    # consumers = []
+  }
+}
 
 
 users = {
