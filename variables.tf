@@ -79,6 +79,10 @@ variable "applications" {
         value = string
         }))
     }))
+    contracts = map(object({
+      name = string
+      relationship_type = string
+    }))
   }))
 }
 

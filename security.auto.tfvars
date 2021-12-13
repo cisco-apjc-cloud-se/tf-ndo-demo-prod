@@ -65,6 +65,7 @@ applications = {
     display_name = "Shared Applications and User Groups"
     segment = "hr"  ## shared template
     epgs = {}
+    contracts = {}
   }
   hrapp1 = {
     name = "hrapp1"
@@ -102,6 +103,12 @@ applications = {
         }
       }
     }
+    contracts = {
+      prov1 = {
+        name = "public-to-hr-app1"
+        relationship_type = "provider"
+      }
+    }
   }
   hrapp2 = {
     name = "hrapp2"
@@ -135,5 +142,6 @@ applications = {
         }
       }
     }
+    contracts = {}
   }
 }

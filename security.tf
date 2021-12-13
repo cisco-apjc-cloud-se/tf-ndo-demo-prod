@@ -99,6 +99,40 @@ locals {
        lower(format("%s-%s", val["filter_name"], val["entry_name"])) => val
    }
 
+   ## ANP - EPG - CONTRACTS ##
+   appepgcontractlist = flatten([
+    for epg_key, epg in local.appepgmap : [
+      for con_key, contract in epg.contracts :
+        {
+          app_name       = epg.app_name
+          segment        = epg.segment
+          epg_name       = epg.epg_name
+          contract_name  = contract.name
+          relationship_type = contract.relationship_type
+        }
+    ]
+  ])
+  appepgcontractmap = {
+    for val in local.appepgcontractlist:
+      lower(format("%s-%s-%s", val["app_name"], val["epg_name"], val["contract_name"])) => val
+  }
+
+  ## USER - CONTRACTS ##
+  usercontractlist = flatten([
+   for user_key, user in var.users : [
+     for con_key, contract in user.contracts :
+       {
+         external_epg_name  = user.external_epg_name
+         contract_name      = contract.name
+         relationship_type  = contract.relationship_type
+       }
+   ]
+ ])
+ usercontractmap = {
+   for val in local.usercontractlist:
+     lower(format("%s-%s", val["external_epg_name"], val["contract_name"])) => val
+ }
+
 }
 
 output "appepgmap" {
@@ -234,4 +268,27 @@ resource "mso_schema_template_contract" "contracts" {
     }
   }
 
+}
+
+## Map App EPGs to Contracts ##
+resource "mso_schema_template_anp_epg_contract" "apps" {
+  for_each = local.appepgcontractmap
+
+  schema_id                   = mso_schema.schema.id
+  template_name               = mso_schema_template.segments[each.value.segment].name # VRF name sames as Template
+  anp_name                    = each.value.app_name
+  epg_name                    = each.value.epg_name
+  contract_name               = each.value.contract_name
+  relationship_type           = each.value.relationship_type
+}
+
+## Map External EPGs to Contracts ##
+resource "mso_schema_template_external_epg_contract" "users" {
+  for_each = local.usercontractmap
+
+  schema_id                   = mso_schema.schema.id
+  template_name               = mso_schema_template.segments[each.value.segment].name # VRF name sames as Template
+  contract_name               = each.value.contract_name
+  external_epg_name           = each.value.external_epg_name
+  relationship_type           = each.value.relationship_type
 }
