@@ -34,6 +34,7 @@ terraform {
 ## Common Setup - Schema, Template, VRFs etc
 module "ndo" {
   source = "./modules/ndo"
+  
   ## General ##
   username      = data.vault_generic_secret.cpoc-ndo.data["username"]
   password      = data.vault_generic_secret.cpoc-ndo.data["password"]
@@ -48,9 +49,9 @@ module "ndo" {
   segments              = var.segments
 
   ## Security Policy Inputs ##
-  users = var.users
-  applications = var.applications
-  contracts = var.contracts
-  filters = var.filters
+  users                 = var.users
+  applications          = var.applications
+  contracts             = var.contracts
+  filters               = var.filters
 
 }
