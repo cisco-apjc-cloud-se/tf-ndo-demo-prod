@@ -14,7 +14,7 @@ locals {
 }
 
 locals {
-  testseg =  merge(var.segment, {})
+  testseg =  merge(var.segments, {})
 }
 
 
