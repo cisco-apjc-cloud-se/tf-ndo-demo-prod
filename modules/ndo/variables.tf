@@ -2,11 +2,11 @@ variable "undeploy" {
   type = bool
 }
 
-variable "ndo_username" {
+variable "username" {
   type = string
 }
 
-variable "ndo_password" {
+variable "password" {
   type = string
   sensitive = true
 }
