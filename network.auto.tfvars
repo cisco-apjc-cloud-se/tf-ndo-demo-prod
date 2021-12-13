@@ -45,17 +45,17 @@ segments = {
                   sub3 = {
                     ip    = "10.1.2.32/28"
                     zone  = "ap-southeast-2a"
-                    # usage = "HR Apps #1"
+                    usage = "unspecified"
                   }
                   sub4 = {
                     ip    = "10.1.2.64/28"
                     zone  = "ap-southeast-2b"
-                    # usage = "HR Apps #2"
+                    usage = "unspecified"
                   }
                   sub5 = {
                     ip    = "10.1.2.96/28"
                     zone  = "ap-southeast-2a"
-                    # usage = "HR Apps TEST NEW"
+                    usage = "unspecified"
                   }
                 }
               }
@@ -82,12 +82,12 @@ segments = {
                   sub3 = {
                     ip    = "10.1.1.32/28"
                     zone  = "ap-southeast-1a"
-                    # usage = "HR Apps #1"
+                    usage = "unspecified"
                   }
                   sub4 = {
                     ip    = "10.1.1.64/28"
                     zone  = "ap-southeast-1b"
-                    # usage = "HR Apps #2"
+                    usage = "unspecified"
                   }
                 }
               }
