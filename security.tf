@@ -81,6 +81,7 @@ locals {
        {
          filter_name                    = filter.name
          filter_display_name            = filter.display_name
+         segment                        = filter.segment
          entry_name                     = entry.name
          entry_display_name             = entry.display_name
          entry_description              = entry.description
