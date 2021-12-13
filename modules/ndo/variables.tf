@@ -1,7 +1,7 @@
 variable "undeploy" {
   type = bool
 }
-// 
+//
 // variable "username" {
 //   type = string
 // }
@@ -47,7 +47,7 @@ variable "segments" {
           primary = bool
           subnets = map(object({
             ip    = string
-            zone  = string
+            zone  = optional(string) ## Not required for Azure, Required for AWS
             usage = optional(string) ## Required but not used except for gateway - needs to be >0 length
           }))
         }))
