@@ -1,6 +1,6 @@
-variable "undeploy" {
-  type = bool
-}
+// variable "undeploy" {
+//   type = bool
+// }
 
 // variable "ndo_username" {
 //   type = string
