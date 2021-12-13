@@ -7,4 +7,8 @@ resource "mso_schema_template" "segments" {
   name            = each.value.name
   display_name    = each.value.display_name
   tenant_id       = data.mso_tenant.tenant.id
+
+  depends_on = [
+    mso_schema.schema
+  ]
 }

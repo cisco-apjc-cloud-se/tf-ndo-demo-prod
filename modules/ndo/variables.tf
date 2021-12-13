@@ -2,18 +2,18 @@ variable "undeploy" {
   type = bool
 }
 
-// variable "ndo_username" {
-//   type = string
-// }
-//
-// variable "ndo_password" {
-//   type = string
-//   sensitive = true
-// }
-//
-// variable "ndo_url" {
-//   type = string
-// }
+variable "ndo_username" {
+  type = string
+}
+
+variable "ndo_password" {
+  type = string
+  sensitive = true
+}
+
+variable "url" {
+  type = string
+}
 
 variable "tenant" {
   type = string

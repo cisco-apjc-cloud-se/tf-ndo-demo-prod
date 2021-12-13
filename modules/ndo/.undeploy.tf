@@ -1,5 +1,5 @@
 ### Undeploy Trigger ####
-resource "mso_schema_template_deploy" "deploy" {
+resource "mso_schema_template_deploy" "undeploy" {
   for_each = merge(local.cloudsitemap, local.acisitemap)
 
   schema_id       = mso_schema.schema.id

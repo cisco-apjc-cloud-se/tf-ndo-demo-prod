@@ -157,6 +157,10 @@ resource "mso_schema_template_anp_epg" "epg" {
   intra_epg                   = each.value.intra_epg #"unenforced"
   intersite_multicast_source  = each.value.intersite_multicast_source
   preferred_group             = each.value.preferred_group
+
+  depends_on = [
+    mso_schema_template_anp.anp
+  ]
 }
 
 ### Application EPG Selectors - Cloud ###
@@ -176,7 +180,8 @@ resource "mso_schema_template_anp_epg_selector" "selector" {
 
   // May not be required...
   depends_on = [
-    mso_schema_template_anp_epg.epg
+    mso_schema_template_anp_epg.epg,
+    mso_schema_template_anp.anp
   ]
 }
 
@@ -205,6 +210,12 @@ resource "mso_schema_site_anp_epg_domain" "vmm" {
   // port_encap_vlan = 45
   // enhanced_lag_policy_name = "name"
   // enhanced_lag_policy_dn = "dn"
+
+  // May not be required...
+  depends_on = [
+    mso_schema_template_anp_epg.epg,
+    mso_schema_template_anp.anp
+  ]
 
 }
 

@@ -9,6 +9,10 @@ resource "mso_schema_template_vrf" "segments" {
   display_name    = each.value.display_name   # Assumes new VRF name to match template name
   # layer3_multicast= false
   # vzany           = false
+
+  depends_on = [
+    mso_schema_template.segments
+  ]
 }
 
 
