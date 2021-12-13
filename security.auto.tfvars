@@ -56,6 +56,12 @@ users = {
     anp = "shared"
     segment = "hr"
     ip = "0.0.0.0/0"
+    contracts = {
+      prov1 = {
+        name = "public-to-hr-app1"
+        relationship_type = "consumer"
+      }
+    }
   }
 }
 

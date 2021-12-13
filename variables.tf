@@ -95,6 +95,10 @@ variable "users" {
     anp = string
     segment = string
     ip = string
+    contracts = map(object({
+      name = string
+      relationship_type = string
+    }))
   }))
 }
 
