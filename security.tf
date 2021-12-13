@@ -154,8 +154,11 @@ resource "mso_schema_template_external_epg" "users" {
   external_epg_type   = each.value.type # "cloud"
   display_name        = each.value.display_name
   vrf_name            = mso_schema_template_vrf.segments[each.value.segment].name # VRF name sames as Template
+  vrf_schema_id       = mso_schema.schema.id
+  vrf_template_name   = mso_schema_template.segments[each.value.segment].name
+
   anp_name            = each.value.anp
-  l3out_name          = "unspecified"
+  // l3out_name          = "unspecified"
   site_id             = [ for site_name in each.value.sites :  data.mso_site.sites[site_name].id ]  ## List?
   selector_name       = each.value.name # use epg_name
   selector_ip         = each.value.ip
