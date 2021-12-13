@@ -9,7 +9,8 @@ locals {
 }
 
 locals {
-  mergedsites =  merge(local.cloudsitemap, local.acisitemap)
+  // mergedsites =  merge(local.cloudsitemap, local.acisitemap)
+  mergedsites = flatten(merge(local.cloudsitemap, local.acisitemap))
 }
 
 
