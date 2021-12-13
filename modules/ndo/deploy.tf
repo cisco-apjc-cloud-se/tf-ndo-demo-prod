@@ -20,7 +20,7 @@ resource "mso_schema_template_deploy" "deploy" {
 
 ### Undeploy Trigger ####
 resource "mso_schema_template_deploy" "undeploy" {
-  for_each = var.undeploy == true? merge(local.cloudsitemap, local.acisitemap) : {}
+  for_each = var.undeploy == true ? try(merge(local.cloudsitemap, local.acisitemap),{}) : {}
 
   schema_id       = mso_schema.schema.id
   template_name   = each.value.segment_name
