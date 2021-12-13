@@ -111,22 +111,22 @@ segments = {
                 subnets = {
                   sub1 = {
                     ip    = "10.2.2.0/28"
-                    # zone  = "ap-southeast-2a"
+                    # zone  = "unspecified"
                     # usage = "unspecified"
                   }
                   sub2 = {
                     ip    = "10.2.2.16/28"
-                    # zone  = "ap-southeast-2b"
+                    # zone  = "unspecified"
                     # usage = "unspecified"
                   }
                   sub3 = {
                     ip    = "10.2.2.32/28"
-                    # zone  = "ap-southeast-2a"
+                    # zone  = "unspecified"
                     # usage = "unspecified"
                   }
                   sub4 = {
                     ip    = "10.2.2.64/28"
-                    # zone  = "ap-southeast-2b"
+                    # zone  = "unspecified"
                     # usage = "unspecified"
                   }
                 }
