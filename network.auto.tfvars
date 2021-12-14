@@ -89,6 +89,11 @@ segments = {
                     zone  = "ap-southeast-1b"
                     # usage = "unspecified"
                   }
+                  sub5 = {
+                    ip    = "10.1.1.64/28"
+                    zone  = "ap-southeast-1a"
+                    # usage = "unspecified"
+                  }
                 }
               }
             }
@@ -126,6 +131,11 @@ segments = {
                   }
                   sub4 = {
                     ip    = "10.2.2.48/28"
+                    # zone  = "unspecified"
+                    # usage = "unspecified"
+                  }
+                  sub5 = {
+                    ip    = "10.2.2.64/28"
                     # zone  = "unspecified"
                     # usage = "unspecified"
                   }
