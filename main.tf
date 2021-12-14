@@ -64,8 +64,8 @@ module "ndo" {
 
 provider "aws" {
   region     = "ap-southeast-2"
-  access_key = data.vault_generic_secret.aws-prod.data["access_key"]
-  secret_key = data.vault_generic_secret.aws-prod.data["secret_key"]
+  access_key = data.vault_generic_secret.aws-prod.data["access"]
+  secret_key = data.vault_generic_secret.aws-prod.data["secret"]
 }
 
 ## Build Test EC2 Instance(s) ##
