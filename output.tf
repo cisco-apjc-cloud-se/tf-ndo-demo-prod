@@ -10,10 +10,10 @@ output "undeploy" {
   value = module.ndo.undeploy
 }
 
-output "appregionvmmap" {
-  value = module.aws.appregionvmmap
-}
-
-output "segmentmap" {
-  value = module.aws.segmentmap
-}
+// output "appregionvmmap" {
+//   value = module.aws.appregionvmmap
+// }
+//
+// output "segmentmap" {
+//   value = module.aws.segmentmap
+// }
