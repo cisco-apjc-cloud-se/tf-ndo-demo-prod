@@ -48,12 +48,12 @@ segments = {
                     # usage = "unspecified"
                   }
                   sub4 = {
-                    ip    = "10.1.2.64/28"
+                    ip    = "10.1.2.48/28"
                     zone  = "ap-southeast-2b"
                     # usage = "unspecified"
                   }
                   sub5 = {
-                    ip    = "10.1.2.96/28"
+                    ip    = "10.1.2.64/28"
                     zone  = "ap-southeast-2a"
                     # usage = "unspecified"
                   }
@@ -85,7 +85,7 @@ segments = {
                     # usage = "unspecified"
                   }
                   sub4 = {
-                    ip    = "10.1.1.64/28"
+                    ip    = "10.1.1.48/28"
                     zone  = "ap-southeast-1b"
                     # usage = "unspecified"
                   }
@@ -125,7 +125,7 @@ segments = {
                     # usage = "unspecified"
                   }
                   sub4 = {
-                    ip    = "10.2.2.64/28"
+                    ip    = "10.2.2.48/28"
                     # zone  = "unspecified"
                     # usage = "unspecified"
                   }
