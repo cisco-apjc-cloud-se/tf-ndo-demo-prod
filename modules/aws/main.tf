@@ -95,7 +95,7 @@ data "aws_subnet" "subnet" {
 data "aws_security_group" "sg" {
   for_each = local.appregionvmmap
 
-  name = lower(format("sgroup-[uni/tn-%s/cloudapp-%s/cloudepg-%s]", var.tenant, each.value.app_name, each.value.tier))
+  name = format("sgroup-[uni/tn-%s/cloudapp-%s/cloudepg-%s]", var.tenant, each.value.app_name, each.value.tier)
   vpc_id = data.aws_vpc.vpc[format("%s-%s",each.value.segment_name,each.value.region_name)].id
 
 }
