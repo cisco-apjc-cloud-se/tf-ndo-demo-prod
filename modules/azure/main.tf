@@ -12,25 +12,46 @@ locals {
   appregionvmlist = flatten([
     for app_key, app in var.azure_apps : [
       for reg_key, region in app.regions : [
-        for vm_key, vm in region.instances :
-        {
-          segment_name    = app.segment
-          app_name        = app.name
-          region_name     = region.name
-          vpc_cidr        = region.vpc_cidr
-          tier            = vm.tier
-          subnet_cidr     = vm.subnet_cidr
-          instance_name   = vm.instance_name
-          instance_count  = vm.instance_count
-        }
-        // if site.type != "aci"
+        for vm_key, vm in region.instances : [
+          for i in range(vm.instance_count)
+          {
+            segment_name    = app.segment
+            app_name        = app.name
+            region_name     = region.name
+            vpc_cidr        = region.vpc_cidr
+            tier            = vm.tier
+            subnet_cidr     = vm.subnet_cidr
+            instance_name   = vm.instance_name
+            instance_count  = vm.instance_count # Total instances
+            instance_number = i # Specific instance number
+          }
+          // if site.type != "aci"
+        ]
       ]
     ]
   ])
-  ### App -> Region -> Instance Map ###
+
   appregionvmmap = {
     for val in local.appregionvmlist:
-      lower(format("%s-%s-%s", val["app_name"], val["region_name"], val["tier"])) => val
+      lower(format("%s-%s-%s-%d", val["app_name"], val["region_name"], val["tier"], val["instance_number"])) => val
+  }
+
+  ### App-Region Map ###
+  appregionlist = flatten([
+    for app_key, app in var.azure_apps : [
+      for reg_key, region in app.regions :
+      {
+        app_name        = app.name
+        segment_name    = app.segment
+        region_name     = region.name
+        // vpc_cidr        = region.vpc_cidr
+      }
+    ]
+  ])
+
+  appregionmap = {
+    for val in local.appregionlist:
+      lower(format("%s-%s", val["app_name"], val["region_name"])) => val
   }
 
   ### Segment-Region Map ###
@@ -52,72 +73,76 @@ locals {
 
 }
 
+### Build New Resource Group for Apps ###
+resource "azurerm_resource_group" "rg" {
+  for_each = var.appregionmap
 
-// ### Create new SSH key ###
-// resource "aws_key_pair" "ubuntu" {
-//   key_name   = "tf-ubuntu"
-//   public_key = var.public_key
-// }
-//
-// ### Lookup Ubuntu 20.04 AMI ###
-// data "aws_ami" "ubuntu" {
-//   most_recent = true
-//
-//   filter {
-//     name   = "name"
-//     values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-//   }
-//
-//   filter {
-//     name   = "virtualization-type"
-//     values = ["hvm"]
-//   }
-//
-//   owners = ["099720109477"] # Canonical
-// }
-//
-// ### Build Lookup Data Source for VPCs a.k.a Segments ###
-// data "aws_vpc" "vpc" {
-//   for_each = local.segmentmap
-//
-//   cidr_block = each.value.vpc_cidr
-// }
-//
-// ### Build Lookup Data Source for Subnets ###
-// data "aws_subnet" "subnet" {
-//   for_each = local.appregionvmmap
-//
-//   vpc_id = data.aws_vpc.vpc[format("%s-%s",each.value.segment_name,each.value.region_name)].id
-//   cidr_block = each.value.subnet_cidr
-// }
-//
-// ### Build Lookup Data Source for Security Groups ###
-// data "aws_security_group" "sg" {
-//   for_each = local.appregionvmmap
-//
-//   // name = format("sgroup-[uni/tn-%s/cloudapp-%s/cloudepg-%s]", var.tenant, each.value.app_name, each.value.tier)
-//   name = format("uni/tn-%s/cloudapp-%s/cloudepg-%s", var.tenant, each.value.app_name, each.value.tier)
-//   vpc_id = data.aws_vpc.vpc[format("%s-%s",each.value.segment_name,each.value.region_name)].id
-//
-// }
-//
-// ### Build new EC2 instances ###
-// module "ec2" {
-//   for_each = local.appregionvmmap
-//
-//   source                 = "terraform-aws-modules/ec2-instance/aws"
-//   version                = "~> 2.0"
-//
-//   name                   = each.value.instance_name
-//   instance_count         = each.value.instance_count
-//   ami                    = data.aws_ami.ubuntu.id
-//   instance_type          = var.instance_type #"t3a.micro"
-//   key_name               = aws_key_pair.ubuntu.id
-//   monitoring             = true
-//   vpc_security_group_ids = [data.aws_security_group.sg[each.key].id]
-//   subnet_id              = data.aws_subnet.subnet[each.key].id
-//
-//   tags = {
-//     EPG = each.value.tier
-//   }
-// }
+  name     = each.value.app_name
+  location = each.value.region_name
+}
+
+### Build Lookup Data Source for VNETs a.k.a Segments ###
+data "azurerm_virtual_network" "segment" {
+  for_each = local.segmentmap
+
+  resource_group_name = format("CAPIC_%s_%s_%s", var.tenant, each.value.segment_name, each.value.region_name )
+  name = each.value.segment_name
+}
+
+### Build Lookup Data Source for Subnets ###
+data "azurerm_subnet" "subnet" {
+  for_each = local.appregionvmmap
+
+  name                 = replace(format("subnet-%s", each.value.subnet_cidr), "/", "_")
+  virtual_network_name = each.value.segment_name
+  resource_group_name  = format("CAPIC_%s_%s_%s", var.tenant, each.value.segment_name, each.value.region_name )
+}
+
+### Build Lookup Data Source for Security Groups ###
+# ?? Needed?
+
+### Build New VM NICs  ###
+resource "azurerm_network_interface" "nic" {
+  for_each = local.appregionvmmap
+
+  name                = format("nic-%s-%d", each.value.instance_name, each.value.instance_number)
+  location            = data.azurerm_resource_group.rg[format("%s-%s", each.value.app_name, each.value.region)].location  ## RG for App, not VNET
+  resource_group_name = data.azurerm_resource_group.rg[format("%s-%s", each.value.app_name, each.value.region)].name      ## RG for App, not VNET
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = data.azurerm_subnet.subnet[each.key].id #azurerm_subnet.example.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+### Build New VMs  ###
+resource "azurerm_linux_virtual_machine" "vm" {
+  for_each = local.appregionvmmap
+
+  name                = format("%s-%d", each.value.instance_name, each.value.instance_number)
+  resource_group_name = data.azurerm_resource_group.rg[format("%s-%s", each.value.app_name, each.value.region)].name      ## RG for App, not VNET
+  location            = data.azurerm_resource_group.rg[format("%s-%s", each.value.app_name, each.value.region)].location  ## RG for App, not VNET
+  size                = var.instance_type
+  admin_username      = "ubuntu"
+  network_interface_ids = [
+    azurerm_network_interface.nic[each.key].id,
+  ]
+
+  admin_ssh_key {
+    username   = "ubuntu"
+    public_key = var.public_key
+  }
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "20.04-LTS"
+    version   = "latest"
+  }
+}

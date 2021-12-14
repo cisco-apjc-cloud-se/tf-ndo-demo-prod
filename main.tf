@@ -108,15 +108,15 @@ provider "azuread" {
   client_secret = data.vault_generic_secret.azure.data["client_secret"]
 }
 
-// module "azure" {
-//   source = "./modules/azure"
-//
-//   tenant          = var.tenant
-//   azure_apps      = var.azure_apps
-//   instance_type   = ""
-//   public_key      = var.public_key
-//
-//   depends_on = [
-//     module.ndo
-//   ]
-// }
+module "azure" {
+  source = "./modules/azure"
+
+  tenant          = var.tenant
+  azure_apps      = var.azure_apps
+  instance_type   = "Standard_B1s"
+  public_key      = var.public_key
+
+  depends_on = [
+    module.ndo
+  ]
+}
