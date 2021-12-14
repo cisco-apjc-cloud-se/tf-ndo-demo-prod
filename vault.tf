@@ -33,3 +33,8 @@ data "vault_generic_secret" "cpoc-ndo" {
 data "vault_generic_secret" "aws-prod" {
   path = "kv/aws-prod"
 }
+
+### Azure Secrets ###
+data "vault_generic_secret" "azure" {
+  path = "kv/azure"
+}

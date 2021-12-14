@@ -100,24 +100,24 @@ data "aws_security_group" "sg" {
   vpc_id = data.aws_vpc.vpc[format("%s-%s",each.value.segment_name,each.value.region_name)].id
 
 }
-//
-// ### Build new EC2 instances ###
-// module "ec2" {
-//   for_each = local.appregionvmmap
-//
-//   source                 = "terraform-aws-modules/ec2-instance/aws"
-//   version                = "~> 2.0"
-//
-//   name                   = each.value.instance_name
-//   instance_count         = each.value.instance_count
-//   ami                    = data.aws_ami.ubuntu.id
-//   instance_type          = var.instance_type #"t3a.micro"
-//   key_name               = aws_key_pair.ubuntu.id
-//   monitoring             = true
-//   vpc_security_group_ids = [data.aws_security_group.sg[each.key].id]
-//   subnet_id              = data.aws_subnet.subnet[each.key].id
-//
-//   tags = {
-//     EPG = each.value.tier
-//   }
-// }
+
+### Build new EC2 instances ###
+module "ec2" {
+  for_each = local.appregionvmmap
+
+  source                 = "terraform-aws-modules/ec2-instance/aws"
+  version                = "~> 2.0"
+
+  name                   = each.value.instance_name
+  instance_count         = each.value.instance_count
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = var.instance_type #"t3a.micro"
+  key_name               = aws_key_pair.ubuntu.id
+  monitoring             = true
+  vpc_security_group_ids = [data.aws_security_group.sg[each.key].id]
+  subnet_id              = data.aws_subnet.subnet[each.key].id
+
+  tags = {
+    EPG = each.value.tier
+  }
+}
