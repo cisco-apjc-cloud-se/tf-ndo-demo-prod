@@ -33,20 +33,21 @@ locals {
       lower(format("%s-%s-%s", val["app_name"], val["region_name"], val["tier"])) => val
   }
 
-  ### Segment Map ###
+  ### Segment-Region Map ###
   segmentlist = distinct(flatten([
     for app_key, app in var.aws_apps : [
       for reg_key, region in app.regions :
       {
-        segment_name = app.segment
-        vpc_cidr = region.vpc_cidr
+        segment_name    = app.segment
+        region_name     = region.name
+        vpc_cidr        = region.vpc_cidr
       }
     ]
   ]))
 
   segmentmap = {
     for val in local.segmentlist:
-      val.segment_name => val
+      lower(format("%s-%s", val["segment_name"], val["region_name"])) => val
   }
 
 }
@@ -75,29 +76,29 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-// ### Build Lookup Data Source for VPCs a.k.a Segments ###
-// data "aws_vpc" "vpc" {
-//   for_each = local.segmentmap
-//
-//   cidr_block = each.value.vpc_cidr
-// }
-//
-// ### Build Lookup Data Source for Subnets ###
-// data "aws_subnet" "subnet" {
-//   for_each = local.appregionvmmap
-//
-//   vpc_id = data.aws_vpc.vpc[each.value.segment_name].id
-//   cidr_block = each.value.subnet_cidr
-// }
-//
-// ### Build Lookup Data Source for Security Groups ###
-// data "aws_security_group" "sg" {
-//   for_each = local.appregionvmmap
-//
-//   name = lower(format("sgroup-[uni/tn-%s/cloudapp-%s/cloudepg-%s]", var.tenant, each.value.app_name, each.value.tier))
-//   vpc_id = data.aws_vpc.vpc[each.value.segment_name].id
-//
-// }
+### Build Lookup Data Source for VPCs a.k.a Segments ###
+data "aws_vpc" "vpc" {
+  for_each = local.segmentmap
+
+  cidr_block = each.value.vpc_cidr
+}
+
+### Build Lookup Data Source for Subnets ###
+data "aws_subnet" "subnet" {
+  for_each = local.appregionvmmap
+
+  vpc_id = data.aws_vpc.vpc[format("%s-%s",each.value.segment_name,each.value.region_name)].id
+  cidr_block = each.value.subnet_cidr
+}
+
+### Build Lookup Data Source for Security Groups ###
+data "aws_security_group" "sg" {
+  for_each = local.appregionvmmap
+
+  name = lower(format("sgroup-[uni/tn-%s/cloudapp-%s/cloudepg-%s]", var.tenant, each.value.app_name, each.value.tier))
+  vpc_id = data.aws_vpc.vpc[format("%s-%s",each.value.segment_name,each.value.region_name)].id
+
+}
 //
 // ### Build new EC2 instances ###
 // module "ec2" {
