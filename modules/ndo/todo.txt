@@ -1,1 +1,60 @@
 - Output of Cloud specific details i.e. VPC/Subnet IDs?
+
+i.e.
+sites = {
+  aws-syd = {
+    name = "aws-syd"
+    type = "aws"
+    id = "XXXXXXX" # VPC ID?
+    epgs = {
+      web = {
+        epg_name = "web"
+        tag_name = "EPG"
+        tag_value = "web"
+      }
+      db = {
+        epg_name = "db"
+        tag_name = "EPG"
+        tag_value = "db"
+      }
+    }
+  }
+  azure-mel = {
+    name = "azure-mel"
+    type = "azure"
+    id = "XXXXXXX" # VNET ID?
+    epgs = {
+      web = {
+        epg_name = "web"
+        tag_name = "EPG"
+        tag_value = "web"
+      }
+      db = {
+        epg_name = "db"
+        tag_name = "EPG"
+        tag_value = "db"
+      }
+    }
+  }
+  cpoc-dmz-syd = {
+    name = "cpoc-dmz-syd"
+    type = "aci"
+    id = "XXXXXXX" # fabrc domain ID???
+    epgs = {
+      web = {
+        epg_name = "web"
+        tag_name = null
+        tag_value = null
+        dpg_name = "XXX|XXX|XXX"
+      }
+      db = {
+        epg_name = "db"
+        tag_name = "EPG"
+        tag_value = "db"
+        dpg_name = "XXX|XXX|XXX"
+      }
+    }
+  }
+
+
+}

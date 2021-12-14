@@ -16,6 +16,10 @@ terraform {
       source = "CiscoDevNet/mso"
       # version = "~> 0.1.5"
     }
+    aws = {
+      source = "hashicorp/aws"
+      # version = "3.25.0"
+    }
   }
 }
 
@@ -53,5 +57,24 @@ module "ndo" {
   applications          = var.applications
   contracts             = var.contracts
   filters               = var.filters
+
+}
+
+### Setup AWS Provider ###
+
+provider "aws" {
+  region     = "ap-southeast-2"
+  access_key = data.vault_generic_secret.aws-prod.data["access_key"]
+  secret_key = data.vault_generic_secret.aws-prod.data["secret_key"]
+}
+
+## Build Test EC2 Instance(s) ##
+module "aws" {
+  source = "./modules/aws"
+
+  tenant          = var.tenant
+  aws_apps        = var.aws_apps
+  instance_type   = "t3a.micro"
+  public_key      = var.public_key
 
 }
