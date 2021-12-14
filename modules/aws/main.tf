@@ -34,12 +34,19 @@ locals {
   }
 
   ### Segment Map ###
+  segmentlist = distinct(flatten([
+    for app_key, app in var.aws_apps : [
+      for reg_key, region in app.regions :
+      {
+        segment_name = app.segment
+        vpc_cidr = region.vpc_cidr
+      }
+    ]
+  ]))
+
   segmentmap = {
-    for val in local.appregionvmlist:
-      val.segment_name => {
-        segment = val.segment_name
-        vpc_cidr = val.vpc_cidr
-      } if contains(keys(local.segmentmap),val.segment_name) == false #...  ## ... to group by key/allow for duplicates
+    for val in local.segmentlist:
+      val.segment_name => val
   }
 
 }
