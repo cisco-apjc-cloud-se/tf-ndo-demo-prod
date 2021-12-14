@@ -68,47 +68,47 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-### Build Lookup Data Source for VPCs a.k.a Segments ###
-data "aws_vpc" "vpc" {
-  for_each = local.segmentmap
-
-  cidr_block = each.value.vpc_cidr
-}
-
-### Build Lookup Data Source for Subnets ###
-data "aws_subnet" "subnet" {
-  for_each = local.appregionvmmap
-
-  vpc_id = data.aws_vpc.vpc[each.value.segment_name].id
-  cidr_block = each.value.subnet_cidr
-}
-
-### Build Lookup Data Source for Security Groups ###
-data "aws_security_group" "sg" {
-  for_each = local.appregionvmmap
-
-  name = lower(format("sgroup-[uni/tn-%s/cloudapp-%s/cloudepg-%s]", var.tenant, each.value.app_name, each.value.tier))
-  vpc_id = data.aws_vpc.vpc[each.value.segment_name].id
-
-}
-
-### Build new EC2 instances ###
-module "ec2" {
-  for_each = local.appregionvmmap
-
-  source                 = "terraform-aws-modules/ec2-instance/aws"
-  version                = "~> 2.0"
-
-  name                   = each.value.instance_name
-  instance_count         = each.value.instance_count
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = var.instance_type #"t3a.micro"
-  key_name               = aws_key_pair.ubuntu.id
-  monitoring             = true
-  vpc_security_group_ids = [data.aws_security_group.sg[each.key].id]
-  subnet_id              = data.aws_subnet.subnet[each.key].id
-
-  tags = {
-    EPG = each.value.tier
-  }
-}
+// ### Build Lookup Data Source for VPCs a.k.a Segments ###
+// data "aws_vpc" "vpc" {
+//   for_each = local.segmentmap
+//
+//   cidr_block = each.value.vpc_cidr
+// }
+//
+// ### Build Lookup Data Source for Subnets ###
+// data "aws_subnet" "subnet" {
+//   for_each = local.appregionvmmap
+//
+//   vpc_id = data.aws_vpc.vpc[each.value.segment_name].id
+//   cidr_block = each.value.subnet_cidr
+// }
+//
+// ### Build Lookup Data Source for Security Groups ###
+// data "aws_security_group" "sg" {
+//   for_each = local.appregionvmmap
+//
+//   name = lower(format("sgroup-[uni/tn-%s/cloudapp-%s/cloudepg-%s]", var.tenant, each.value.app_name, each.value.tier))
+//   vpc_id = data.aws_vpc.vpc[each.value.segment_name].id
+//
+// }
+//
+// ### Build new EC2 instances ###
+// module "ec2" {
+//   for_each = local.appregionvmmap
+//
+//   source                 = "terraform-aws-modules/ec2-instance/aws"
+//   version                = "~> 2.0"
+//
+//   name                   = each.value.instance_name
+//   instance_count         = each.value.instance_count
+//   ami                    = data.aws_ami.ubuntu.id
+//   instance_type          = var.instance_type #"t3a.micro"
+//   key_name               = aws_key_pair.ubuntu.id
+//   monitoring             = true
+//   vpc_security_group_ids = [data.aws_security_group.sg[each.key].id]
+//   subnet_id              = data.aws_subnet.subnet[each.key].id
+//
+//   tags = {
+//     EPG = each.value.tier
+//   }
+// }
