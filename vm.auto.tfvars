@@ -11,7 +11,7 @@ aws_apps = {
             tier = "web" # EPG
             subnet_cidr = "10.1.2.32/28"
             instance_name = "hrapp1-web"
-            instance_count = 1
+            instance_count = 2
           }
           db = {
             tier = "db" # EPG
