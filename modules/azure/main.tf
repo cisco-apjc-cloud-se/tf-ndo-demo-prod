@@ -1,8 +1,8 @@
 terraform {
   required_providers {
-    aws = {
-      source = "hashicorp/azure"
-      # version = "3.25.0"
+    azurerm = {
+      source = "hashicorp/azurerm"
+      # version = "=2.46.0"
     }
   }
 }
@@ -13,7 +13,7 @@ locals {
     for app_key, app in var.azure_apps : [
       for reg_key, region in app.regions : [
         for vm_key, vm in region.instances : [
-          for i in range(vm.instance_count)
+          for i in range(vm.instance_count) :
           {
             segment_name    = app.segment
             app_name        = app.name
@@ -75,7 +75,7 @@ locals {
 
 ### Build New Resource Group for Apps ###
 resource "azurerm_resource_group" "rg" {
-  for_each = var.appregionmap
+  for_each = local.appregionmap
 
   name     = each.value.app_name
   location = each.value.region_name
@@ -106,8 +106,8 @@ resource "azurerm_network_interface" "nic" {
   for_each = local.appregionvmmap
 
   name                = format("nic-%s-%d", each.value.instance_name, each.value.instance_number)
-  location            = data.azurerm_resource_group.rg[format("%s-%s", each.value.app_name, each.value.region)].location  ## RG for App, not VNET
-  resource_group_name = data.azurerm_resource_group.rg[format("%s-%s", each.value.app_name, each.value.region)].name      ## RG for App, not VNET
+  location            = azurerm_resource_group.rg[format("%s-%s", each.value.app_name, each.value.region)].location  ## RG for App, not VNET
+  resource_group_name = azurerm_resource_group.rg[format("%s-%s", each.value.app_name, each.value.region)].name      ## RG for App, not VNET
 
   ip_configuration {
     name                          = "internal"
@@ -121,8 +121,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
   for_each = local.appregionvmmap
 
   name                = format("%s-%d", each.value.instance_name, each.value.instance_number)
-  resource_group_name = data.azurerm_resource_group.rg[format("%s-%s", each.value.app_name, each.value.region)].name      ## RG for App, not VNET
-  location            = data.azurerm_resource_group.rg[format("%s-%s", each.value.app_name, each.value.region)].location  ## RG for App, not VNET
+  resource_group_name = azurerm_resource_group.rg[format("%s-%s", each.value.app_name, each.value.region)].name      ## RG for App, not VNET
+  location            = azurerm_resource_group.rg[format("%s-%s", each.value.app_name, each.value.region)].location  ## RG for App, not VNET
   size                = var.instance_type
   admin_username      = "ubuntu"
   network_interface_ids = [
