@@ -39,7 +39,7 @@ locals {
       val.segment_name => {
         segment = val.segment_name
         vpc_cidr = val.vpc_cidr
-      } if contains(keys(local.segmentmap),val.segmentmap) == false #...  ## ... to group by key/allow for duplicates
+      } if contains(keys(local.segmentmap),val.segment_name) == false #...  ## ... to group by key/allow for duplicates
   }
 
 }
