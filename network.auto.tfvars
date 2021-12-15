@@ -164,7 +164,7 @@ segments = {
                 ip                  = "10.0.0.1/24"
                 scope               = "private" # public
                 description         = "HR Apps"
-                shared              = false
+                shared              = true
                 no_default_gateway  = false
                 querier             = true
               }
