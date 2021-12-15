@@ -235,7 +235,7 @@ applications = {
             name = "web"
             key = "Custom:EPG"
             operator = "equals"
-            value = "web"
+            value = "hrapp1-web"
           }
         }
         contracts = {
@@ -258,7 +258,7 @@ applications = {
             name = "db"
             key = "Custom:EPG"
             operator = "equals"
-            value = "db"
+            value = "hrapp1-db"
           }
         }
         contracts = {
@@ -284,7 +284,7 @@ applications = {
             name = "web"
             key = "Custom:EPG"
             operator = "equals"
-            value = "web"
+            value = "hrapp2-web"
           }
         }
         contracts = {
@@ -307,7 +307,7 @@ applications = {
             name = "db"
             key = "Custom:EPG"
             operator = "equals"
-            value = "db"
+            value = "hrapp2-db"
           }
         }
         contracts = {
