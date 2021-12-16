@@ -235,12 +235,12 @@ applications = {
         # intersite_multicast_source = false
         # preferred_group = false
         selectors = {
-          sel1 = {
-            name = "web"
-            key = "Custom:EPG"
-            operator = "equals"
-            value = "hrapp1-web"
-          }
+          # sel1 = {
+          #   name = "web"
+          #   key = "Custom:EPG"
+          #   operator = "equals"
+          #   value = "hrapp1-web"
+          # }
         }
         contracts = {
           prov1 = {
@@ -258,12 +258,12 @@ applications = {
         display_name = "Database Tier"
         bd_name = "tf-mcdemo-bd1" # "unspecified"
         selectors = {
-          sel1 = {
-            name = "db"
-            key = "Custom:EPG"
-            operator = "equals"
-            value = "hrapp1-db"
-          }
+          # sel1 = {
+          #   name = "db"
+          #   key = "Custom:EPG"
+          #   operator = "equals"
+          #   value = "hrapp1-db"
+          # }
         }
         contracts = {
           prov1 = {
@@ -284,12 +284,12 @@ applications = {
         display_name = "Web Tier"
         bd_name = "tf-mcdemo-bd1" # "unspecified"
         selectors = {
-          sel1 = {
-            name = "web"
-            key = "Custom:EPG"
-            operator = "equals"
-            value = "hrapp2-web"
-          }
+          # sel1 = {
+          #   name = "web"
+          #   key = "Custom:EPG"
+          #   operator = "equals"
+          #   value = "hrapp2-web"
+          # }
         }
         contracts = {
           prov1 = {
@@ -307,12 +307,12 @@ applications = {
         display_name = "Database Tier"
         bd_name = "tf-mcdemo-bd1" # "unspecified"
         selectors = {
-          sel1 = {
-            name = "db"
-            key = "Custom:EPG"
-            operator = "equals"
-            value = "hrapp2-db"
-          }
+          # sel1 = {
+          #   name = "db"
+          #   key = "Custom:EPG"
+          #   operator = "equals"
+          #   value = "hrapp2-db"
+          # }
         }
         contracts = {
           prov1 = {
