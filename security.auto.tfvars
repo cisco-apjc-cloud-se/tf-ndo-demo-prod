@@ -206,7 +206,7 @@ users = {
         name = "public-to-hr-app1"
         relationship_type = "consumer"
       }
-      cons1 = {
+      cons2 = {
         name = "public-to-hr-app2"
         relationship_type = "consumer"
       }
