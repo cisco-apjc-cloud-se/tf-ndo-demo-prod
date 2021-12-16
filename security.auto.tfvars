@@ -202,8 +202,12 @@ users = {
     segment = "hr"
     ip = "0.0.0.0/0"
     contracts = {
-      prov1 = {
+      cons1 = {
         name = "public-to-hr-app1"
+        relationship_type = "consumer"
+      }
+      cons1 = {
+        name = "public-to-hr-app2"
         relationship_type = "consumer"
       }
     }
