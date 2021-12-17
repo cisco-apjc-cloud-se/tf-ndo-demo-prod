@@ -103,7 +103,6 @@ filters = {
   }
 }
 
-
 contracts = {
   public-hrapp1 = {
     name = "public-to-hr-app1"
@@ -185,8 +184,23 @@ contracts = {
       }
     }
   }
+  servers-to-internet = {
+    name = "servers-to-internet"
+    display_name = "Server Access to Internet"
+    segment = "hr"
+    filter_type = "bothWay"
+    context = "context"
+    directives = ["none"] # None or Log as List
+    filters = {
+      allow-all = {
+        name = "allow-all"
+      }
+      allow-icmp = {
+        name = "allow-icmp"
+      }
+    }
+  }
 }
-
 
 users = {
   cloud-public = {
@@ -209,6 +223,10 @@ users = {
       cons2 = {
         name = "public-to-hr-app2"
         relationship_type = "consumer"
+      }
+      prov1 = {
+        name = "servers-to-internet"
+        relationship_type = "provider"
       }
     }
   }
@@ -251,6 +269,10 @@ applications = {
             name = "hr-app1-web-to-db"
             relationship_type = "consumer"
           }
+          cons2 = {
+            name = "servers-to-internet"
+            relationship_type = "consumer"
+          }
         }
       }
       db = {
@@ -269,6 +291,10 @@ applications = {
           prov1 = {
             name = "hr-app1-web-to-db"
             relationship_type = "provider"
+          }
+          cons1 = {
+            name = "servers-to-internet"
+            relationship_type = "consumer"
           }
         }
       }
@@ -300,6 +326,10 @@ applications = {
             name = "hr-app2-web-to-db"
             relationship_type = "consumer"
           }
+          cons2 = {
+            name = "servers-to-internet"
+            relationship_type = "consumer"
+          }
         }
       }
       db = {
@@ -318,6 +348,10 @@ applications = {
           prov1 = {
             name = "hr-app2-web-to-db"
             relationship_type = "provider"
+          }
+          cons1 = {
+            name = "servers-to-internet"
+            relationship_type = "consumer"
           }
         }
       }
